@@ -10,6 +10,7 @@
 #import "ShopifyConstants.h"
 #import "ClosePluginUseCase.h"
 #import "GetPlatformVersionUseCase.h"
+#import "shopify/shopify-Swift.h"
 
 @implementation ShopifyPlugin
 
@@ -27,6 +28,8 @@
         with:[[ClosePluginUseCase alloc] initWith:self.mPluginContext]];
     [provider registerUseCase:@"getPlatformVersion"
         with:[[GetPlatformVersionUseCase alloc] initWith:self.mPluginContext]];
+    [provider registerUseCase:@"initialize"
+                         with:[[InitializeUseCase alloc] initWith:self.mPluginContext]];
 }
 
 @end

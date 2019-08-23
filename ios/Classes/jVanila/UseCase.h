@@ -19,5 +19,6 @@
 -(id)initWith:(PluginContext *)context;
 -(void)executeWithMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result;
 -(void)triggerWithMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result;
+- (void)createErrorWithCase:(NSString *)errorCase message:(NSString*)errorMessage error:(id) errorObj on:(FlutterResult)result;
 
 @end

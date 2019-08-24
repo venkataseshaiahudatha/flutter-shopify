@@ -11,19 +11,19 @@ import ShopApp_Shopify
 import MobileBuySDK
 import Flutter
 
-class CompleteCheckoutByCardUseCase: UseCase {
+public class CompleteCheckoutByCardUseCase: UseCase {
     
     static let ARG_ADDRESS_JSON = "addressJson"
     static let ARG_CHECKOUT_JSON = "checkoutJson"
     static let ARG_CREDIT_CARD_VALUE_TOKEN = "creditCardValueToken"
     static let ARG_EMAIL = "email"
     
-    override init(_ context: PluginContext) {
+    override public init(_ context: PluginContext) {
         
         super.init(context)
     }
 
-    override func trigger(with methodCall: FlutterMethodCall, result: @escaping (Any?) -> Void) {
+    override public func trigger(with methodCall: FlutterMethodCall, result: @escaping (Any?) -> Void) {
         
         if let args = methodCall.arguments as? [String:String] {
             let token = args[CompleteCheckoutByCardUseCase.ARG_CREDIT_CARD_VALUE_TOKEN]

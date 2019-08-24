@@ -9,18 +9,18 @@ import UIKit
 import ShopApp_Shopify
 import Flutter
 
-class InitializeUseCase: UseCase {
+public class InitializeUseCase: UseCase {
     
     static let ARG_BASE_DOMAIN = "baseDomain"
     static let ARG_STORE_FRONT_ACCESS_TOKEN = "storeFrontAccessToken"
     static let ARG_API_KEY = "apiKey"
     static let ARG_API_PASSWORD = "apiPassword"
     
-    override init(_ context:PluginContext) {
+    override public init(_ context:PluginContext) {
         super.init(context)
     }
     
-    override func trigger(with methodCall: FlutterMethodCall, result: @escaping (Any?) -> Void) {
+    override public func trigger(with methodCall: FlutterMethodCall, result: @escaping (Any?) -> Void) {
         
         if let args = methodCall.arguments as? [String:String] {
             

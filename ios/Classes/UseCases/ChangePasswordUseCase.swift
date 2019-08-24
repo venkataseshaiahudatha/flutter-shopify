@@ -9,15 +9,15 @@ import UIKit
 import ShopApp_Shopify
 import Flutter
 
-class ChangePasswordUseCase: UseCase {
+public class ChangePasswordUseCase: UseCase {
     
     static let ARG_PASSWORD = "password"
     
-    override init(_ context:PluginContext) {
+    override public init(_ context:PluginContext) {
         super.init(context)
     }
     
-    override func trigger(with methodCall: FlutterMethodCall, result: @escaping (Any?) -> Void) {
+    override public func trigger(with methodCall: FlutterMethodCall, result: @escaping (Any?) -> Void) {
         
         if let args = methodCall.arguments as? [String:String] {
             

@@ -7,23 +7,24 @@
 
 import UIKit
 import ShopApp_Shopify
+import Flutter
 
 class CreateCheckoutUseCase: UseCase {
 
     static let ARG_CART_PRODUCT_JSON = "cartProductJson"
     
-    override init!(_ context: PluginContext!) {
+    override init(_ context: PluginContext) {
         super.init(context)
     }
     
-    override func trigger(with call: FlutterMethodCall!, result: FlutterResult!) {
+    override func trigger(with methodCall: FlutterMethodCall, result: @escaping (Any?) -> Void) {
         
-        if let args = call.arguments as? [String:String] {
+        if let args = methodCall.arguments as? [String:String] {
             let cartProductJson = args[CreateCheckoutUseCase.ARG_CART_PRODUCT_JSON]
             
             
             
-//            (mContext.api.instance as! ShopifyAPI).completeCheckout(<#T##checkout: PayCheckout##PayCheckout#>, billingAddress: <#T##PayAddress#>, applePayToken: <#T##String#>, idempotencyToken: <#T##String#>, completion: <#T##(Order?, RepoError?) -> Void#>)
+            //            (mContext.api.instance as! ShopifyAPI).completeCheckout(<#T##checkout: PayCheckout##PayCheckout#>, billingAddress: <#T##PayAddress#>, applePayToken: <#T##String#>, idempotencyToken: <#T##String#>, completion: <#T##(Order?, RepoError?) -> Void#>)
         }
     }
 }

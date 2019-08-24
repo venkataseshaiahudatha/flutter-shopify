@@ -7,8 +7,9 @@
 
 import UIKit
 import ShopApp_Shopify
-import ShopApp_Gateway
+//import ShopApp_Gateway
 import MobileBuySDK
+import Flutter
 
 class CompleteCheckoutByCardUseCase: UseCase {
     
@@ -17,32 +18,33 @@ class CompleteCheckoutByCardUseCase: UseCase {
     static let ARG_CREDIT_CARD_VALUE_TOKEN = "creditCardValueToken"
     static let ARG_EMAIL = "email"
     
-    override init!(_ context: PluginContext!) {
+    override init(_ context: PluginContext) {
+        
         super.init(context)
     }
-    
-    override func trigger(with call: FlutterMethodCall!, result: FlutterResult!) {
+
+    override func trigger(with methodCall: FlutterMethodCall, result: @escaping (Any?) -> Void) {
         
-        if let args = call.arguments as? [String:String] {
+        if let args = methodCall.arguments as? [String:String] {
             let token = args[CompleteCheckoutByCardUseCase.ARG_CREDIT_CARD_VALUE_TOKEN]
             let email = args[CompleteCheckoutByCardUseCase.ARG_EMAIL]
             let addressJson = args[CompleteCheckoutByCardUseCase.ARG_ADDRESS_JSON]
             let checkoutJson = args[CompleteCheckoutByCardUseCase.ARG_CHECKOUT_JSON]
             
-            let address = Address(addressJSON: addressJson!)
-            let checkout = Checkout(checkout: checkoutJson!)
+//            let address = Address(addressJSON: addressJson!)
+//            let checkout = Checkout(checkout: checkoutJson!)
             
             
-            (mContext.api.instance as! ShopifyAPI).completeCheckout(checkout.payCheckout, billingAddress: address as! PayAddress, applePayToken: "", idempotencyToken: token!) { (order, error) in
-
-                if error != nil {
-
-                    result(error!)
-                }else {
-
-
-                }
-            }
+//            (mContext?.api.instance as! ShopifyAPI).completeCheckout(checkout.payCheckout, billingAddress: address as! PayAddress, applePayToken: "", idempotencyToken: token!) { (order, error) in
+//                
+//                if error != nil {
+//                    
+//                    result(error!)
+//                }else {
+//                    
+//                    
+//                }
+//            }
         }
     }
 }

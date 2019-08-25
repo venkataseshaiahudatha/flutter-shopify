@@ -7,7 +7,7 @@
 
 import UIKit
 import ShopApp_Shopify
-//import ShopApp_Gateway
+import ShopApp_Gateway
 import MobileBuySDK
 import Flutter
 
@@ -31,8 +31,8 @@ public class CompleteCheckoutByCardUseCase: UseCase {
             let addressJson = args[CompleteCheckoutByCardUseCase.ARG_ADDRESS_JSON]
             let checkoutJson = args[CompleteCheckoutByCardUseCase.ARG_CHECKOUT_JSON]
             
-//            let address = Address(addressJSON: addressJson!)
-//            let checkout = Checkout(checkout: checkoutJson!)
+            let address = Utilities.shared.createAddressObject(from: addressJson)
+            let checkout = Utilities.shared.createCheckoutObject(from: checkoutJson)
             
             
 //            (mContext?.api.instance as! ShopifyAPI).completeCheckout(checkout.payCheckout, billingAddress: address as! PayAddress, applePayToken: "", idempotencyToken: token!) { (order, error) in

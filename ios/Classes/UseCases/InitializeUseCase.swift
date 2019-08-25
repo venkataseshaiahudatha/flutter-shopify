@@ -28,8 +28,7 @@ public class InitializeUseCase: UseCase {
             let storeFrontAccessToken = args[InitializeUseCase.ARG_STORE_FRONT_ACCESS_TOKEN]
             let apiKey = args[InitializeUseCase.ARG_API_KEY]
             let apiPassword = args[InitializeUseCase.ARG_API_PASSWORD]
-            
-            //            mContext.api.instance = ShopifyAPI(apiKey: <#T##String#>, shopDomain: <#T##String#>, adminApiKey: <#T##String#>, adminPassword: <#T##String#>, applePayMerchantId: <#T##String?#>)
+            mContext.api.instance = ShopifyAPI(apiKey: apiKey!, shopDomain: baseDomain!, adminApiKey: storeFrontAccessToken!, adminPassword: apiPassword!, applePayMerchantId: nil)
         }
     }
 }

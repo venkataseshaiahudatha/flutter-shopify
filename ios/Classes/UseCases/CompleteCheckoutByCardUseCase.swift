@@ -31,6 +31,7 @@ public class CompleteCheckoutByCardUseCase: UseCase {
             let addressJson = args[CompleteCheckoutByCardUseCase.ARG_ADDRESS_JSON]
             let checkoutJson = args[CompleteCheckoutByCardUseCase.ARG_CHECKOUT_JSON]
             
+
             let address = Utilities.shared.createAddressObject(from: addressJson)
             let checkout = Utilities.shared.createCheckoutObject(from: checkoutJson)
             

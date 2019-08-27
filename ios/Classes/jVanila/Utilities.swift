@@ -70,7 +70,7 @@ class Utilities: NSObject {
                 checkoutObj.currencyCode = checkoutJSON["currencyCode"]
                 if let _shippingLine = checkoutJSON["shippingLine"] {
                     
-                    checkoutObj.shippingLine = ShippingRate(shippingRate: _shippingLine)
+                    checkoutObj.shippingLine = createShippingRateObject(from: _shippingLine)
                 }
                 if let _shippingAddress = checkoutJSON["shippingAddress"] {
                     
@@ -87,12 +87,13 @@ class Utilities: NSObject {
                             
                             let srJSON = try JSONSerialization.data(withJSONObject: asr, options: .prettyPrinted)
                             let jsonString = String(data: srJSON, encoding: .utf8)!
-                            let _sr = ShippingRate(shippingRate: jsonString)
-                            if _availableShippingRates == nil {
-                                
-                                _availableShippingRates = [ShippingRate]()
+                            if let _sr = createShippingRateObject(from: jsonString) {
+                                if _availableShippingRates == nil {
+                                    
+                                    _availableShippingRates = [ShippingRate]()
+                                }
+                                _availableShippingRates?.append(_sr)
                             }
-                            _availableShippingRates?.append(_sr)
                         }
                     }
                     checkoutObj.availableShippingRates = _availableShippingRates
@@ -104,14 +105,15 @@ class Utilities: NSObject {
                             
                             let liJSON = try JSONSerialization.data(withJSONObject: li, options: .prettyPrinted)
                             let jsonString = String(data: liJSON, encoding: .utf8)!
-                            let _li = LineItem(lineItem: jsonString)
-                            _lineItems.append(_li)
+                            if let _li = createLineItemObject(from: jsonString) {
+                                _lineItems.append(_li)
+                            }
                         }
                     }
                     checkoutObj.lineItems = _lineItems
                 }
-            
-            return checkoutObj
+                
+                return checkoutObj
                 
             }
             return nil
@@ -122,4 +124,57 @@ class Utilities: NSObject {
             return nil
         }
     }
+    
+    func createShippingRateObject(from shippngRate:String?) -> ShippingRate? {
+        
+        guard shippngRate != nil else {
+            return nil
+        }
+        let shippingRateObj = ShippingRate()
+        do {
+            if let addressJSONDict = try JSONSerialization.jsonObject(with: shippngRate!.data(using: .utf8)!, options: .allowFragments) as? Dictionary<String, String> {
+                
+                shippingRateObj.title = addressJSONDict["title"]
+                shippingRateObj.price = addressJSONDict["price"]
+                shippingRateObj.handle = addressJSONDict["handle"]!
+                return shippingRateObj
+            }
+            
+            return nil
+        }
+        catch {
+            
+            print("Error in converting address JSON string to a valid JSON object!")
+            return nil
+        }
+    }
+    
+    func createLineItemObject(from lineItem:String?) -> LineItem? {
+        
+        guard lineItem != nil else {
+            return nil
+        }
+        let lineItemObj = LineItem()
+        do {
+            if let addressJSONDict = try JSONSerialization.jsonObject(with: lineItem!.data(using: .utf8)!, options: .allowFragments) as? Dictionary<String, Any> {
+                
+                lineItemObj.id = addressJSONDict["id"] as! String
+                if let temp = addressJSONDict["price"] as? Int {
+                    
+                    lineItemObj.price = Decimal(integerLiteral: temp)
+                }
+                lineItemObj.quantity = addressJSONDict["quantity"] as? Int ?? 0
+                return lineItemObj
+            }
+            
+            return nil
+        }
+        catch {
+            
+            print("Error in converting address JSON string to a valid JSON object!")
+            return nil
+        }
+    }
+    
+    
 }

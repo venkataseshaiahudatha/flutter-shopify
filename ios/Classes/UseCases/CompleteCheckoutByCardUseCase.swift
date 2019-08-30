@@ -31,21 +31,28 @@ public class CompleteCheckoutByCardUseCase: UseCase {
             let addressJson = args[CompleteCheckoutByCardUseCase.ARG_ADDRESS_JSON]
             let checkoutJson = args[CompleteCheckoutByCardUseCase.ARG_CHECKOUT_JSON]
             
-
-            let address = Utilities.shared.createAddressObject(from: addressJson)
-            let checkout = Utilities.shared.createCheckoutObject(from: checkoutJson)
             
+            let address = Address(addressJSON: addressJson)
+            let checkout = Checkout(from: checkoutJson)
             
-//            (mContext?.api.instance as! ShopifyAPI).completeCheckout(checkout.payCheckout, billingAddress: address as! PayAddress, applePayToken: "", idempotencyToken: token!) { (order, error) in
-//                
-//                if error != nil {
-//                    
-//                    result(error!)
-//                }else {
-//                    
-//                    
-//                }
-//            }
+            let payAddress = PayAddress(from: address, email: email)
+            (mContext?.api.instance as! ShopifyAPI).completeCheckout(checkout.payCheckout, billingAddress: payAddress, applePayToken: "", idempotencyToken: token!) { (order, error) in
+                
+                if error != nil || order == nil {
+                    
+                    if error != nil {
+                    result(error!)
+                    }
+                    else {
+                        
+                        result(false)
+                    }
+                }else if order != nil {
+                    
+                    let jsonString = order!.toJSONString()
+                    result(jsonString)
+                }
+            }
         }
     }
 }

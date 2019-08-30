@@ -29,6 +29,9 @@ public class InitializeUseCase: UseCase {
             let apiKey = args[InitializeUseCase.ARG_API_KEY]
             let apiPassword = args[InitializeUseCase.ARG_API_PASSWORD]
             mContext?.api.instance = ShopifyAPI(apiKey: apiKey!, shopDomain: baseDomain!, adminApiKey: storeFrontAccessToken!, adminPassword: apiPassword!, applePayMerchantId: nil)
+            let status = "mApi initialized " + String(describing: mContext.api.instance)
+            print(status)
+            result(status)
         }
     }
 }

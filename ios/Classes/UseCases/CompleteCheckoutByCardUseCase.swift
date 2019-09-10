@@ -41,7 +41,7 @@ public class CompleteCheckoutByCardUseCase: UseCase {
                 if error != nil || order == nil {
                     
                     if error != nil {
-                    result(error!)
+                        self.createError(withCase: "completeCheckoutUseCase", message: error!.errorMessage ?? "", error: error!, on: result)
                     }
                     else {
                         

@@ -23,20 +23,23 @@ public class ChangePasswordUseCase: UseCase {
             
             if let password = args[ChangePasswordUseCase.ARG_PASSWORD] {
                 
-                (mContext?.api.instance as! ShopifyAPI).resetPassword(with: password) { (success, error) in
-
+                (mContext.api.instance as! ShopifyAPI).updateCustomer(with: password, callback: { (customer, error) in
+                    
                     if error != nil {
-
-                        self.createError(withCase: "ChangePasswordUseCase", message: error!.errorMessage ?? "", error: error!, on: result)
-
+                        
+                        self.createError(withCase: "ChangePasswordUseCase", message: error!.errorMessage, error: error!, on: result)
                     }else {
-                        if success != nil {
-
+                        
+                        if customer != nil {
                             result(true)
+                        }else {
+                            
+                            result(false)
                         }
                     }
-                }
+                })
             }
         }
     }
 }
+

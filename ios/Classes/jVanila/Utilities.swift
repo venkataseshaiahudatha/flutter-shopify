@@ -371,6 +371,24 @@ extension Address {
             return
         }
     }
+    
+    static func toDictionaryArray(source objectArray:[Any]?) -> [[String : AnyObject]] {
+        
+        if let sourceArray = objectArray as? [Address] {
+            var retArray = [[String:AnyObject]]()
+            for anItem in sourceArray {
+                
+                let newItem = anItem.toDictionary()
+                retArray.append(newItem)
+                
+            }
+            return retArray
+        }
+        else {
+            
+            return [["":"" as AnyObject]]
+        }
+    }
 }
 
 extension LineItem :JSONConvertible {
@@ -468,6 +486,13 @@ extension Order:JSONConvertible {
     
     func toDictionary() -> [String : AnyObject] {
         return ["id":self.id as AnyObject, "firs":self.currencyCode as AnyObject? ?? "" as AnyObject, "number":self.number as AnyObject? ?? "" as AnyObject, "createdAt":self.createdAt as AnyObject, "shippingAddress":self.shippingAddress?.toDictionary() as AnyObject, "subtotalPrice":self.subtotalPrice as AnyObject, "totalPrice":self.totalPrice as AnyObject, "totalShippingPrice":self.totalShippingPrice as AnyObject, "paginationValue":self.paginationValue as AnyObject, "items":OrderItem.toDictionaryArray(source: self.items) as AnyObject]
+    }
+}
+
+extension Customer:JSONConvertible {
+    
+    func toDictionary() -> [String : AnyObject] {
+        return ["email":self.email as AnyObject, "firstName":self.firstName as AnyObject? ?? "" as AnyObject, "lastName":self.lastName as AnyObject? ?? "" as AnyObject, "phone":self.phone as AnyObject, "promo":self.promo as AnyObject, "defaultAddress":self.defaultAddress?.toDictionary() as AnyObject, "addresses":Address.toDictionaryArray(source: self.addresses) as AnyObject]
     }
 }
 

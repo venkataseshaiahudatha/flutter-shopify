@@ -7,6 +7,8 @@
 //
 
 #import "UseCase.h"
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 @implementation UseCase
 
@@ -28,6 +30,12 @@
 
 - (void)triggerWithMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
     //override
+}
+
+- (void)createErrorWithCase:(NSString *)errorCase message:(NSString*)errorMessage error:(id) errorObj on:(FlutterResult)result  {
+    
+    NSString *errorString = [NSString stringWithFormat:@"%@ %@ %@", errorCase, errorMessage, errorObj];
+    result(errorString);
 }
 
 @end

@@ -6,7 +6,9 @@
 //  Copyright © 2019 The Chromium Authors. All rights reserved.
 //
 
+
 #import "Plugin.h"
+
 @class Plugin;
 
 @interface ShopifyPlugin : Plugin

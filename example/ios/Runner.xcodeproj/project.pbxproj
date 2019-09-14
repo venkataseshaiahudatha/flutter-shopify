@@ -60,6 +60,8 @@
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CD149C1CEA5010BC0059B260 /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
+		CE52BD66232CDFDE00C892B7 /* ShopApp_Gateway.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ShopApp_Gateway.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE52BD68232CDFDE00C892B7 /* ShopApp_Shopify.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ShopApp_Shopify.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F13AA54674B6041DC83B8412 /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -80,6 +82,8 @@
 		5C67FEC39728E84372CE7420 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CE52BD66232CDFDE00C892B7 /* ShopApp_Gateway.framework */,
+				CE52BD68232CDFDE00C892B7 /* ShopApp_Shopify.framework */,
 				600FC3A0D4B7BEBE77253E4F /* Pods_Runner.framework */,
 			);
 			name = Frameworks;
@@ -470,7 +474,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9740EEB21CF90195004384FC /* Debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -499,7 +503,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;

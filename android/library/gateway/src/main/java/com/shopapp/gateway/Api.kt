@@ -60,7 +60,7 @@ interface Api {
 
     fun getCountries(callback: ApiCallback<List<Country>>)
 
-    fun createCheckout(cartProductList: List<CartProduct>, callback: ApiCallback<Checkout>)
+    fun createCheckout(cartProductList: List<CartProduct>, note: String, callback: ApiCallback<Checkout>)
 
     fun getCheckout(checkoutId: String, callback: ApiCallback<Checkout>)
 

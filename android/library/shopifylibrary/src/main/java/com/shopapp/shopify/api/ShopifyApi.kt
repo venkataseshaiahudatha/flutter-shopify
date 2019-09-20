@@ -575,7 +575,7 @@ class ShopifyApi : Api {
 
     override fun searchProductList(perPage: Int, paginationValue: Any?,
                                    searchQuery: String, callback: ApiCallback<List<Product>>) {
-        queryProducts(perPage, paginationValue, searchQuery, true, SortType.RELEVANT , callback)
+        queryProducts(perPage, paginationValue, searchQuery, false, SortType.NAME , callback)
     }
 
     /* CATEGORY */
@@ -614,7 +614,7 @@ class ShopifyApi : Api {
                                             .cursor()
                                             .node({ productQuery ->
                                                 getDefaultProductQuery(productQuery)
-                                                    .images({ it.first(1) }, { imageConnectionQuery ->
+                                                    .images({ it.first(3) }, { imageConnectionQuery ->
                                                         imageConnectionQuery.edges({ imageEdgeQuery ->
                                                             imageEdgeQuery.node({ QueryHelper.getDefaultImageQuery(it) })
                                                         })
@@ -822,13 +822,13 @@ class ShopifyApi : Api {
 
     /* CHECKOUT */
 
-    override fun createCheckout(cartProductList: List<CartProduct>, callback: ApiCallback<Checkout>) {
+    override fun createCheckout(cartProductList: List<CartProduct>, note: String, callback: ApiCallback<Checkout>) {
 
         val input = Storefront.CheckoutCreateInput().setLineItems(
             cartProductList.map {
                 Storefront.CheckoutLineItemInput(it.quantity, ID(it.productVariant.id))
             }
-        )
+        ).setNote(note)
 
         val mutateQuery = Storefront.mutation {
             it.checkoutCreate(input) {

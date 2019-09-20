@@ -126,6 +126,7 @@ const String kMethodGetOrder = "getOrder";
 const String kArgCheckout = "checkout";
 const String kArgCheckoutId = "checkoutId";
 const String kCartProductJson = "cartProductJson";
+const String kCheckoutSplNote = "checkoutSplNote";
 
 // Create Checkout Method Call
 const String kMethodCreateCheckout = "createCheckout";

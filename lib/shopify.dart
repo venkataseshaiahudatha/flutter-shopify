@@ -115,6 +115,11 @@ class Shopify {
     return response;
   }
 
+  static Product getProductFromJson(json) {
+    List variants = json['variants'];
+    return Product.fromJson(json);
+  }
+
   static Future<Product> getProduct(String id) async {
     Map<dynamic, dynamic> args = new Map();
     args[kArgProductId] = id;
@@ -499,12 +504,13 @@ class Shopify {
   //////////////////////////////////  CHECKOUT  ///////////////////////////////
   //////////////////////////////////////////////////////////////////////////////
 
-  static Future<Checkout> createCheckout(List<CartProduct> cartProductList)
-    async {
+  static Future<Checkout> createCheckout(List<CartProduct> cartProductList,
+      {String note}) async {
 
     Map<dynamic, dynamic> args = new Map();
     String cartProductJson = json.encode(cartProductList);
     args[kCartProductJson] = cartProductJson;
+    args[kCheckoutSplNote] = note;
 
     Checkout response;
     await _channel.invokeMethod(

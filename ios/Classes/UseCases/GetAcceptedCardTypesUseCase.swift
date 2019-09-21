@@ -10,7 +10,7 @@ import ShopApp_Shopify
 import ShopApp_Gateway
 import Flutter
 
-class GetAcceptedCardTypesUseCase: UseCase {
+public class GetAcceptedCardTypesUseCase: UseCase {
     
     override public init(_ context: PluginContext) {
         super.init(context)

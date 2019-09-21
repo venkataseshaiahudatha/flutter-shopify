@@ -10,7 +10,7 @@ import ShopApp_Shopify
 import ShopApp_Gateway
 import Flutter
 
-class EditCustomerInfoUseCase: UseCase {
+public class EditCustomerInfoUseCase: UseCase {
 
     static let ARG_FIRST_NAME = "firstName"
     static let ARG_LAST_NAME = "lastName"

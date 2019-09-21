@@ -31,6 +31,17 @@
         with:[[GetPlatformVersionUseCase alloc] initWith:self.mPluginContext]];
     [provider registerUseCase:@"initialize"
                          with:[[InitializeUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"signIn"
+                         with:[[SignInUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"signOut"
+                         with:[[SignOutUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"signUp"
+                         with:[[SignUpUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"getCustomer"
+                         with:[[GetCustomerUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"isLoggedIn"
+                         with:[[IsLoggedInUseCase alloc]initWith:self.mPluginContext]];
+    
 }
 
 @end

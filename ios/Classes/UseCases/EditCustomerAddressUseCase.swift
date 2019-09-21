@@ -10,7 +10,7 @@ import ShopApp_Shopify
 import ShopApp_Gateway
 import Flutter
 
-class EditCustomerAddressUseCase: UseCase {
+public class EditCustomerAddressUseCase: UseCase {
 
     static let ARG_ADDRESS_ID = "addressId"
     static let ARG_PRIMARY_ADDRESS = "primaryAddress"

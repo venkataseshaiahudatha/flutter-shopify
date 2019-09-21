@@ -22,13 +22,16 @@ public class InitializeUseCase: UseCase {
     
     override public func trigger(with methodCall: FlutterMethodCall, result: @escaping (Any?) -> Void) {
         
-        if let args = methodCall.arguments as? [String:String] {
+        
+        guard let args = methodCall.arguments as? [String:String] else {
+            return
+        }
+        if let baseDomain = args[InitializeUseCase.ARG_BASE_DOMAIN] ,
+            let storeFrontAccessToken = args[InitializeUseCase.ARG_STORE_FRONT_ACCESS_TOKEN],
+            let apiKey = args[InitializeUseCase.ARG_API_KEY],
+            let apiPassword = args[InitializeUseCase.ARG_API_PASSWORD]{
             
-            let baseDomain = args[InitializeUseCase.ARG_BASE_DOMAIN]
-            let storeFrontAccessToken = args[InitializeUseCase.ARG_STORE_FRONT_ACCESS_TOKEN]
-            let apiKey = args[InitializeUseCase.ARG_API_KEY]
-            let apiPassword = args[InitializeUseCase.ARG_API_PASSWORD]
-            mContext?.api.instance = ShopifyAPI(apiKey: apiKey!, shopDomain: baseDomain!, adminApiKey: storeFrontAccessToken!, adminPassword: apiPassword!, applePayMerchantId: nil)
+            mContext?.api.instance = ShopifyAPI(apiKey: storeFrontAccessToken, shopDomain: baseDomain, adminApiKey: apiKey, adminPassword: apiPassword, applePayMerchantId: "APPLE PAY MERCHANT ID")
             let status = "mApi initialized " + String(describing: mContext.api.instance)
             print(status)
             result(status)

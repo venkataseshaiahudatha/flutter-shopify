@@ -10,7 +10,7 @@ import ShopApp_Shopify
 import ShopApp_Gateway
 import Flutter
 
-class ForgotPasswordUseCase: UseCase {
+public class ForgotPasswordUseCase: UseCase {
 
     static let ARG_EMAIL = "email"
     

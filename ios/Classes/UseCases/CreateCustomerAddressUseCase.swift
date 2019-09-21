@@ -10,7 +10,7 @@ import ShopApp_Shopify
 import ShopApp_Gateway
 import Flutter
 
-class CreateCustomerAddressUseCase: UseCase {
+public class CreateCustomerAddressUseCase: UseCase {
 
     static let ARG_ADDRESS_JSON = "addressJson"
     

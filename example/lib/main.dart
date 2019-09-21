@@ -47,14 +47,19 @@ class _MyAppState extends State<MyApp> {
     params.apiPassword = "5c3061bb2e053642fc1422409ccbb89e";
     await Shopify.initialize(params);
 
-    signIn();
+   // signIn();
+        signUp(); // phone no with country code is mandatory
+
+    isLoggedIn();
+//    signOut();
+//    isLoggedIn();
 //    getProductsList(); //variantList is coming  null in this call
 //    getProduct(); //variantList is present in individual product call
 //    getProductVariants();
 //    searchProductList();
 
-    getCategories();
-    getCategoryDetails();
+   // getCategories();
+ //   getCategoryDetails();
 
 //    getArticleList(); //ArticleList is itself empty
 //    getArticle();
@@ -77,7 +82,7 @@ class _MyAppState extends State<MyApp> {
 //    editCustomerAddress();
 //    deleteCustomerAddress();
 
-    editCustomerInfo();
+    // editCustomerInfo();
 
 //    updateCustomerSettings();
 
@@ -235,8 +240,8 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> signIn() async {
     //bool val = await Shopify.signIn("imei3559230619@gmail.com", "bFppaybqvWaD6CZXF2");
-    bool val = await Shopify.signIn("test@gmail.com", "test123456");
-
+    //bool val = await Shopify.signIn("test@gmail.com", "test123456");
+    bool val = await Shopify.signIn("test1@gmail.com", "test987654");
     print('Result - $val');
     getCustomer();
   }
@@ -252,8 +257,9 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> signUp() async {
-    String val = await Shopify.signUp("first_name", "last_name", "test@gmail.com", "test123456", "+911234567890");
+    String val = await Shopify.signUp("first_name", "last_name", "test1@gmail.com", "test987654", "+919985024234");
     print('Result - $val');
+    signIn();
   }
 
   Future<void> isLoggedIn() async {

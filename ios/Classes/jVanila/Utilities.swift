@@ -115,7 +115,7 @@ extension ShippingRate: JSONConvertible {
             price: Decimal(string: price!)!
         )
     }
-    
+
     convenience init(from shippngRate:String?) {
         self.init()
         guard shippngRate != nil else {
@@ -492,7 +492,7 @@ extension Order:JSONConvertible {
 extension Customer:JSONConvertible {
     
     func toDictionary() -> [String : AnyObject] {
-        return ["email":self.email as AnyObject, "firstName":self.firstName as AnyObject? ?? "" as AnyObject, "lastName":self.lastName as AnyObject? ?? "" as AnyObject, "phone":self.phone as AnyObject, "promo":self.promo as AnyObject, "defaultAddress":self.defaultAddress?.toDictionary() as AnyObject, "addresses":Address.toDictionaryArray(source: self.addresses) as AnyObject]
+        return ["id":self.email as AnyObject,"email":self.email as AnyObject, "firstName":self.firstName as AnyObject? ?? "" as AnyObject, "lastName":self.lastName as AnyObject? ?? "" as AnyObject, "phone":self.phone as AnyObject, "isAcceptsMarketing":self.promo as AnyObject, "defaultAddress":self.defaultAddress?.toDictionary() as AnyObject, "addressList":Address.toDictionaryArray(source: self.addresses) as AnyObject]
     }
 }
 

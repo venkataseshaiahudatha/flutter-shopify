@@ -10,7 +10,7 @@ import ShopApp_Shopify
 import ShopApp_Gateway
 import Flutter
 
-class DeleteCustomerAddressUseCase: UseCase {
+public class DeleteCustomerAddressUseCase: UseCase {
 
     static let ARG_ADDRESS_ID = "addressId"
     

@@ -47,12 +47,16 @@ class _MyAppState extends State<MyApp> {
     params.apiPassword = "5c3061bb2e053642fc1422409ccbb89e";
     await Shopify.initialize(params);
 
-   // signIn();
-        signUp(); // phone no with country code is mandatory
+    signIn();
+ //       signUp(); // phone no with country code is mandatory
 
-    isLoggedIn();
+  //  isLoggedIn();
 //    signOut();
 //    isLoggedIn();
+
+
+
+
 //    getProductsList(); //variantList is coming  null in this call
 //    getProduct(); //variantList is present in individual product call
 //    getProductVariants();
@@ -284,8 +288,22 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> getCustomer() async {
-    Customer customer = await Shopify.getCustomer();
-    print('Result - $customer');
+
+ //   createCustomerAddress();
+    //    setDefaultShippingAddress();
+ //   editCustomerAddress();
+    deleteCustomerAddress();
+
+    // editCustomerInfo();
+
+   // updateCustomerSettings();
+    //Z2lkOi8vc2hvcGlmeS9NYWlsaW5nQWRkcmVzcy8yNTg3MDM1MDc0NjE5P21vZGVsX25hbWU9Q3VzdG9tZXJBZGRyZXNzJmN1c3RvbWVyX2FjY2Vzc190b2tlbj1rVExEeTNydE95WXM1SjdVY2NUM2VMbTliZEVxcHpIUUpiOW01cEE3alRJQzhhWTZXNGZHX2pSRjlQRzVEWW5qWVowSzFkaE1mdEJJVFRaYWpjeHBXSGdLTVRfSzdVMkNFb19oN20zT2c3VmcyTkhvLW80XzhTOG9tRkV1aFVPRF9yaHU2SnJKWGIza18wRUJHMkc4MW5CYjhjSk9ROFR5d082aVdtZmlkZEprNmlBSmw4eTVRUXp1bVA4ejFKUE85SFhRR2J0MWUwcnp0a21ZdHZzb3pQZm0waGg2eGFKTFllRE1lcWdBWGF6d19QX0dSN3lYRVJEQm94VUZIRWV4
+//    Customer customer = await Shopify.getCustomer();
+//    print('Result - $customer');
+
+
+
+
   }
 
   Future<void> setDefaultShippingAddress() async {
@@ -310,12 +328,12 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> editCustomerAddress() async {
     Address address = new Address();
-    address.id = "Z2lkOi8vc2hvcGlmeS9NYWlsaW5nQWRkcmVzcy83OTcwMTE2MDc2MTE/bW9kZWxfbmFtZT1DdXN0b21lckFkZHJlc3MmY3VzdG9tZXJfYWNjZXNzX3Rva2VuPTZDUEtFaUJxRk9LdEVpQTRIYks1MHdCVTJubkI3Yzc3NW84ZXNnZUxfMUVFbEFtOWhRcExzRFgyOEozejhkTnE2SFRwX2J4SThqc0NlcTlIUE9mWW9vM3F4bXdraUs3aktJQ1E0SVVzMktqS19RLVFCeDhWdW9sWjRDNjdkbjVRWTJROUJkSHYxaGpSQUlELXlsb19YaDBiZGRZWjB2alltdE5Ueklsbm5ZZnlwSzlaM09adVdmUXVFRVlLeE9NYkFTbG5lTGhDNDgyQ1J0QUhTYS1ZTl9yS3dQNW9RbVVmb0QxRDRlaHZlbGdNS0hVY0xtcEgzOHJMWUJKbDJBazI=";
+    address.id = "Z2lkOi8vc2hvcGlmeS9NYWlsaW5nQWRkcmVzcy8yNTg3MDM1MDc0NjE5P21vZGVsX25hbWU9Q3VzdG9tZXJBZGRyZXNzJmN1c3RvbWVyX2FjY2Vzc190b2tlbj0zVnZsTmk2QkN0RHRRYjRRVzUyNldUaDFZZzNRMkF4YnBrN2hnd2VncTVaWkhRZHA2U3Q2V3RWR0ZrN01vTWVZWVQxdU9YaUdjdzN1aklOR1lGb1RkWEJLX3IwM19ET2I2Y205aGM3bG03U1VVZkpzN2loN3pKN3JNa0J1My0yV0RpbFhIZDNqajRDbnotVzJKV0FYX25VNDl1c3Zad19lMzBnOU92elVZLWlvZERQZGdXUDA2bk5tczFaZUVwMlN6N3dzQ3NCTkdqcXRMTEw5dlBDa1hjOERrbGxoajFaV1hSaXVUUXBwekJOQW5aSEtCUjNMOTRrZnJubXV1YmVO";
     address.address = "primary address changed";
     address.secondAddress = "second Address changed";
     address.city = "my city";
-    address.state = "my state";
-    address.country = "my country";
+    address.state = "Alberta";
+    address.country = "Canada";
     address.firstName = "my first name1";
     address.lastName = "my last name1";
     address.zip = "654321";
@@ -323,16 +341,21 @@ class _MyAppState extends State<MyApp> {
     address.phone = "+910123456789";
     bool val = await Shopify.editCustomerAddress(address.id, address);
     print('Result - $val');
+    Customer customer = await Shopify.getCustomer();
+    print('Result - $customer');
   }
 
   Future<void> deleteCustomerAddress() async {
     Address address = new Address();
-    bool val = await Shopify.deleteCustomerAddress("Z2lkOi8vc2hvcGlmeS9NYWlsaW5nQWRkcmVzcy83OTcwMTE2MDc2MTE/bW9kZWxfbmFtZT1DdXN0b21lckFkZHJlc3MmY3VzdG9tZXJfYWNjZXNzX3Rva2VuPTZDUEtFaUJxRk9LdEVpQTRIYks1MHdCVTJubkI3Yzc3NW84ZXNnZUxfMUVFbEFtOWhRcExzRFgyOEozejhkTnE2SFRwX2J4SThqc0NlcTlIUE9mWW9vM3F4bXdraUs3aktJQ1E0SVVzMktqS19RLVFCeDhWdW9sWjRDNjdkbjVRWTJROUJkSHYxaGpSQUlELXlsb19YaDBiZGRZWjB2alltdE5Ueklsbm5ZZnlwSzlaM09adVdmUXVFRVlLeE9NYkFTbG5lTGhDNDgyQ1J0QUhTYS1ZTl9yS3dQNW9RbVVmb0QxRDRlaHZlbGdNS0hVY0xtcEgzOHJMWUJKbDJBazI=");
+    bool val = await Shopify.deleteCustomerAddress("Z2lkOi8vc2hvcGlmeS9NYWlsaW5nQWRkcmVzcy8yNTg3MDM1MDc0NjE5P21vZGVsX25hbWU9Q3VzdG9tZXJBZGRyZXNzJmN1c3RvbWVyX2FjY2Vzc190b2tlbj1SaTNNMDFkWkhwWmkxa25xR1dENUZyS2FYT014aTFfR0FtNWozVHgxYS1JQzhNSE45bnV4ay1YWWVLdnpveXZJZGRWRUthTThvNm9ZQ09pZWxXMjg3eDRJWHkxSVFHUExsTk93X0J3b1NMMkhzV1FFREdNQm9VcFdzUkJuZDJpd1NJTERYSHYtVDRVLUlkNlhUSmVqeVp1RHY0a3J6ZGlOTndCZFpLa0h0Zkd2Ri1KZjMxLXBIWk13RER2MVhub18tN0ZKWVR5RzJvQlpWY1QxX3hzWTZtWGxxOU54MmZwRVA3Yms1U1A1NDlySWtUTXhfX21QRVB0allTWS1oN2w3");
     print('Result - $val');
+    Customer customer = await Shopify.getCustomer();
+    print('Result - $customer');
   }
 
   Future<void> editCustomerInfo() async {
-    Customer customer = await Shopify.editCustomerInfo("name", "last_name", "+911234567890","test123@gmail.com")
+   // "first_name", "last_name", "test1@gmail.com", "test987654", "+919985024234")
+    Customer customer = await Shopify.editCustomerInfo("updated_first_name", "updated_last_name", "+919985023259","test1@gmail.com")
     .then((value){
       print("Got error: ${value}");
     }) // Future completes with two()'s error.
@@ -343,8 +366,12 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> updateCustomerSettings() async {
-    bool val = await Shopify.updateCustomerSettings(false);
+    bool val = await Shopify.updateCustomerSettings(true);
     print('Result - $val');
+    Customer customer = await Shopify.getCustomer();
+    print('Result - $customer');
+
+
   }
 
   Future<void> getOrders() async {

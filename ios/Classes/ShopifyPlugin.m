@@ -41,7 +41,18 @@
                          with:[[GetCustomerUseCase alloc]initWith:self.mPluginContext]];
     [provider registerUseCase:@"isLoggedIn"
                          with:[[IsLoggedInUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"createCustomerAddress"
+                         with:[[CreateCustomerAddressUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"editCustomerAddress"
+                         with:[[EditCustomerAddressUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"editCustomerInfo"
+                         with:[[EditCustomerInfoUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"deleteCustomerAddress"
+                         with:[[DeleteCustomerAddressUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"updateCustomerSettings"
+                         with:[[UpdateCustomerSettingsUseCase alloc]initWith:self.mPluginContext]];
     
-}
+    
+    }
 
 @end

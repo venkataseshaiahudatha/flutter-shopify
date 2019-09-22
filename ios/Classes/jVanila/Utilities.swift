@@ -347,12 +347,12 @@ extension Address {
     convenience init(addressJSON:String?) {
         
         self.init()
-        guard addressJSON != nil else {
+        guard let addressJSONObject = addressJSON else {
             return
         }
         let addressObj = Address()
         do {
-            if let addressJSONDict = try JSONSerialization.jsonObject(with: addressJSON!.data(using: .utf8)!, options: .allowFragments) as? Dictionary<String, String> {
+            if let addressJSONDict = try JSONSerialization.jsonObject(with: addressJSONObject.data(using: .utf8) ?? Data(), options: .allowFragments) as? Dictionary<String, String> {
                 
                 addressObj.firstName = addressJSONDict["firstName"]
                 addressObj.lastName = addressJSONDict["lastName"]

@@ -17,14 +17,15 @@ public class GetCustomerUseCase: UseCase {
     }
     
     override public func trigger(with methodCall: FlutterMethodCall, result: @escaping (Any?) -> Void) {
-        
-        (mContext.api.instance as! ShopifyAPI).getCustomer() { (customer, error) in
-            if let errorObject = error {
-                self.createError(withCase: "GetCustomerUseCase", message: errorObject.errorMessage,
-                                 error: errorObject, on: result)
-            } else if let customerObject = customer {
-                let customerJsonString = customerObject.toJSONString()
-                result(customerJsonString)
+        if let shopifyAPI = mContext.api.instance as? ShopifyAPI {
+            shopifyAPI.getCustomer() { (customer, error) in
+                if let customerObject = customer {
+                    let customerJsonString = customerObject.toJSONString()
+                    result(customerJsonString)
+                } else if let errorObject = error {
+                    self.createError(withCase: "GetCustomerUseCase", message: errorObject.errorMessage,
+                                     error: errorObject, on: result)
+                }
             }
         }
     }

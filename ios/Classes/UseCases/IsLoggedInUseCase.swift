@@ -18,7 +18,9 @@ public class IsLoggedInUseCase: UseCase {
     }
     
     override public func trigger(with methodCall: FlutterMethodCall, result: @escaping (Any?) -> Void) {
-        let isLoggedIn = (mContext.api.instance as! ShopifyAPI).isLoggedIn()
-        result(isLoggedIn)
+        if let shopifyAPI = mContext.api.instance as? ShopifyAPI {
+            let isLoggedIn = shopifyAPI.isLoggedIn()
+            result(isLoggedIn)
+        }
     }
 }

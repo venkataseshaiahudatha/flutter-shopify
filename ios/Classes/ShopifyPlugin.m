@@ -51,7 +51,10 @@
                          with:[[DeleteCustomerAddressUseCase alloc]initWith:self.mPluginContext]];
     [provider registerUseCase:@"updateCustomerSettings"
                          with:[[UpdateCustomerSettingsUseCase alloc]initWith:self.mPluginContext]];
-    
+    [provider registerUseCase:@"changePassword"
+                         with:[[ChangePasswordUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"forgotPassword"
+                         with:[[ForgotPasswordUseCase alloc]initWith:self.mPluginContext]];
     
     }
 

@@ -272,13 +272,15 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> forgotPassword() async {
-    bool val = await Shopify.forgotPassword("test@gmail.com");
+    bool val = await Shopify.forgotPassword("test1@gmail.com");
     print('Result - $val');
   }
 
   Future<void> changePassword() async {
-    bool val = await Shopify.changePassword("abc123");
-    print('Result - $val');
+    bool val = await Shopify.changePassword("abcd987654");
+    print('changePassword Result - $val');
+    Customer customer = await Shopify.getCustomer();
+    print('getCustomer Result - $customer');
   }
 
   Future<void> getCountries() async {
@@ -292,7 +294,7 @@ class _MyAppState extends State<MyApp> {
  //   createCustomerAddress();
     //    setDefaultShippingAddress();
  //   editCustomerAddress();
-    deleteCustomerAddress();
+ //   deleteCustomerAddress();
 
     // editCustomerInfo();
 
@@ -300,6 +302,10 @@ class _MyAppState extends State<MyApp> {
     //Z2lkOi8vc2hvcGlmeS9NYWlsaW5nQWRkcmVzcy8yNTg3MDM1MDc0NjE5P21vZGVsX25hbWU9Q3VzdG9tZXJBZGRyZXNzJmN1c3RvbWVyX2FjY2Vzc190b2tlbj1rVExEeTNydE95WXM1SjdVY2NUM2VMbTliZEVxcHpIUUpiOW01cEE3alRJQzhhWTZXNGZHX2pSRjlQRzVEWW5qWVowSzFkaE1mdEJJVFRaYWpjeHBXSGdLTVRfSzdVMkNFb19oN20zT2c3VmcyTkhvLW80XzhTOG9tRkV1aFVPRF9yaHU2SnJKWGIza18wRUJHMkc4MW5CYjhjSk9ROFR5d082aVdtZmlkZEprNmlBSmw4eTVRUXp1bVA4ejFKUE85SFhRR2J0MWUwcnp0a21ZdHZzb3pQZm0waGg2eGFKTFllRE1lcWdBWGF6d19QX0dSN3lYRVJEQm94VUZIRWV4
 //    Customer customer = await Shopify.getCustomer();
 //    print('Result - $customer');
+
+
+    forgotPassword();
+    //changePassword();
 
 
 

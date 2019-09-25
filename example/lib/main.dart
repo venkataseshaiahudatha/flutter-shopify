@@ -291,7 +291,8 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> getCustomer() async {
 
- //   createCustomerAddress();
+    createCustomerAddress();
+    getCountries();
     //    setDefaultShippingAddress();
  //   editCustomerAddress();
  //   deleteCustomerAddress();
@@ -304,7 +305,7 @@ class _MyAppState extends State<MyApp> {
 //    print('Result - $customer');
 
 
-    forgotPassword();
+   // forgotPassword();
     //changePassword();
 
 

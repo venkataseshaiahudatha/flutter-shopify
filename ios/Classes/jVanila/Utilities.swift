@@ -495,4 +495,140 @@ extension Customer:JSONConvertible {
         return ["id":self.email as AnyObject,"email":self.email as AnyObject, "firstName":self.firstName as AnyObject? ?? "" as AnyObject, "lastName":self.lastName as AnyObject? ?? "" as AnyObject, "phone":self.phone as AnyObject, "isAcceptsMarketing":self.promo as AnyObject, "defaultAddress":self.defaultAddress?.toDictionary() as AnyObject, "addressList":Address.toDictionaryArray(source: self.addresses) as AnyObject]
     }
 }
+extension State:JSONConvertible {
+    
+    func toDictionary() -> [String : AnyObject] {
+        
+        return ["id": 1 as AnyObject,"name":self.name as AnyObject,"countryId": 1 as AnyObject,"code":"" as AnyObject]
+    }
+    static func toDictionaryArray(source objectArray:[Any]?) -> [[String : AnyObject]] {
+        
+        if let sourceArray = objectArray as? [State] {
+            var retArray = [[String:AnyObject]]()
+            for anItem in sourceArray {
+                let newItem = anItem.toDictionary()
+                retArray.append(newItem)
+            }
+            return retArray
+        }
+        else {
+            
+            return [["":"" as AnyObject]]
+        }
+    }
+}
+
+extension Country:JSONConvertible {
+    func toDictionary() -> [String : AnyObject] {
+        // TODO: Need to refactor when we have actual values. We added place holder values to fix crash
+        return ["name":self.name as AnyObject,"id": 1 as AnyObject,"code":"" as AnyObject,
+                "states":State.toDictionaryArray(source: self.states) as AnyObject]
+    }
+    static func toDictionaryArray(source objectArray:[Any]?) -> [[String : AnyObject]] {
+        
+        if let sourceArray = objectArray as? [Country] {
+            var retArray = [[String:AnyObject]]()
+            for anItem in sourceArray {
+                let newItem = anItem.toDictionary()
+                retArray.append(newItem)
+            }
+            return retArray
+        }
+        else {
+            
+            return [["":"" as AnyObject]]
+        }
+    }
+}
+
+//extension Product:JSONConvertible {
+//
+//    convenience init(from productJSON:String?) {
+//        self.init()
+//        guard productJSON != nil else {
+//            return
+//        }
+//
+//
+//        do {
+//            if let productJSONDict = try JSONSerialization.jsonObject(with: productJSON?.data(using: .utf8) ?? Data(), options: .allowFragments) as? Dictionary<String, Any> {
+//
+//                self.id = productJSONDict["id"] as? String ?? ""
+//                self.title = productJSONDict["title"] as? String ?? ""
+//                self.productDescription = productJSONDict["productDescription"] as? String
+//                if let priceString  = productJSONDict["price"] as? String {
+//                    self.price = Decimal(string: priceString)
+//                }
+//                self.hasAlternativePrice = productJSONDict["hasAlternativePrice"] as? Bool ?? false
+//                self.currency = productJSONDict["currency"] as? String ?? ""
+//                self.discount = productJSONDict["discount"] as? String ?? ""
+//                self.type = productJSONDict["type"] as? String ?? ""
+//                self.vendor = productJSONDict["vendor"] as? String ?? ""
+//                self.paginationValue = productJSONDict["paginationValue"] as? String ?? ""
+//                self.additionalDescription = productJSONDict["additionalDescription"] as? String ?? ""
+//
+//                if let createdAtString  = productJSONDict["createdAt"] as? String {
+//                    let dateFormatter = DateFormatter()
+//                    dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZZZ"
+//                    self.createdAt = dateFormatter.date(from: createdAtString)
+//                }
+//                if let updatedAtString  = productJSONDict["updatedAt"] as? String {
+//                    let dateFormatter = DateFormatter()
+//                    dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZZZ"
+//                    self.updatedAt = dateFormatter.date(from: updatedAtString)
+//
+//                }
+//
+//
+////                public var tags: [String]?
+////                public var variants: [ProductVariant]?
+////                public var options: [ProductOption]?
+////
+//                if let selectedImagesJSON = productJSONDict["images"] as? String{
+//                    let _selectedImagesJSONObj = try JSONSerialization.jsonObject(with: selectedImagesJSON.data(using: .utf8)!, options: .allowFragments)
+//                    if let selectedImagesJSONObj = _selectedImagesJSONObj as? [[String:Any]] {
+//                        var _selectedImages = [Image]()
+//                        for _image in selectedImagesJSONObj {
+//                            let imageData = try JSONSerialization.data(withJSONObject: _image, options: .prettyPrinted)
+//                            let imageJSONString = String(data: imageData, encoding: .utf8)
+//                            let image = Image(from: imageJSONString)
+//                            _selectedImages.append(image)
+//                        }
+//                        self.images = _selectedImages
+//                    }
+//                }
+//
+//                if let priceString  = productJSONDict["price"] as? String {
+//
+//                    self.price = Decimal(string: priceString)
+//                }
+//
+//                if let selectedOptionsJSON = productJSONDict["selectedOptions"] as? String{
+//
+//                    let _selectedOptionsJSONObj = try JSONSerialization.jsonObject(with: selectedOptionsJSON.data(using: .utf8)!, options: .allowFragments)
+//                    if let selectedOptionsJSONObj = _selectedOptionsJSONObj as? [[String:Any]] {
+//                        var _selectedOptions = [VariantOption]()
+//                        for _image in selectedOptionsJSONObj {
+//
+//                            let variantOptionData = try JSONSerialization.data(withJSONObject: _image, options: .prettyPrinted)
+//                            let variantOptionJSONString = String(data: variantOptionData, encoding: .utf8)
+//                            let variantOption = VariantOption(from: variantOptionJSONString)
+//                            _selectedOptions.append(variantOption)
+//                        }
+//                        self.selectedOptions = _selectedOptions
+//                    }
+//                }
+//            }
+//        }
+//        catch {
+//
+//            print("Error in converting Product Variant JSON string to a valid JSON object!")
+//        }
+//    }
+//
+//    func toDictionary() -> [String : AnyObject] {
+//        return ["id":self.id as AnyObject, "title":self.title as AnyObject? ?? "" as AnyObject, "price":self.price as AnyObject? ?? "" as AnyObject, "available":self.available as AnyObject, "productId":self.productId as AnyObject, "image":self.image?.toDictionary() as AnyObject, "selectedOptions":VariantOption.toDictionaryArray(source: self.selectedOptions!) as AnyObject]
+//    }
+//}
+
 

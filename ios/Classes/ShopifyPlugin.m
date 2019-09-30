@@ -57,6 +57,8 @@
                          with:[[ForgotPasswordUseCase alloc]initWith:self.mPluginContext]];
     [provider registerUseCase:@"getCountries"
                          with:[[GetCountriesUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"getProductList"
+                         with:[[GetProductListUseCase alloc]initWith:self.mPluginContext]];
     
     }
 

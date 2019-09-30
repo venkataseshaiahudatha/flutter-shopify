@@ -7,6 +7,7 @@
 
 import UIKit
 import ShopApp_Gateway
+import ShopApp_Shopify
 import MobileBuySDK
 
 extension Checkout: JSONConvertible {
@@ -115,7 +116,7 @@ extension ShippingRate: JSONConvertible {
             price: Decimal(string: price!)!
         )
     }
-
+    
     convenience init(from shippngRate:String?) {
         self.init()
         guard shippngRate != nil else {
@@ -218,15 +219,12 @@ extension VariantOption:JSONConvertible {
         if let sourceArray = objectArray as? [VariantOption] {
             var retArray = [[String:AnyObject]]()
             for variantOption in sourceArray {
-                
                 let newVariantOption = variantOption.toDictionary()
                 retArray.append(newVariantOption)
-                
             }
             return retArray
         }
         else {
-            
             return [["":"" as AnyObject]]
         }
     }
@@ -272,7 +270,6 @@ extension ProductVariant:JSONConvertible {
                 self.id = productVariantJSONDict["id"] as? String ?? ""
                 self.title = productVariantJSONDict["title"] as? String
                 if let priceString  = productVariantJSONDict["price"] as? String {
-                    
                     self.price = Decimal(string: priceString)
                 }
                 self.available = productVariantJSONDict["available"] as? Bool ?? false
@@ -301,8 +298,21 @@ extension ProductVariant:JSONConvertible {
             }
         }
         catch {
-            
             print("Error in converting Product Variant JSON string to a valid JSON object!")
+        }
+    }
+    
+    static func toDictionaryArray(source objectArray:[Any]?) -> [[String : AnyObject]] {
+        if let sourceArray = objectArray as? [ProductVariant] {
+            var retArray = [[String:AnyObject]]()
+            for variantOption in sourceArray {
+                let newVariantOption = variantOption.toDictionary()
+                retArray.append(newVariantOption)
+            }
+            return retArray
+        }
+        else {
+            return [["":"" as AnyObject]]
         }
     }
     
@@ -338,7 +348,7 @@ extension OrderItem:JSONConvertible {
 }
 
 extension Address {
-
+    
     func toDictionary() -> [String : AnyObject] {
         
         return ["id":self.id as AnyObject, "firstName":self.firstName as AnyObject? ?? "" as AnyObject, "lastName":self.lastName as AnyObject? ?? "" as AnyObject, "address":self.address as AnyObject, "secondAddress":self.secondAddress as AnyObject, "city":self.city as AnyObject, "country":self.country as AnyObject, "state":self.state as AnyObject, "zip":self.zip as AnyObject, "phone":self.phone as AnyObject ]
@@ -540,95 +550,229 @@ extension Country:JSONConvertible {
         }
     }
 }
+extension ProductOption:JSONConvertible {
+    
+    static func toDictionaryArray(source objectArray:[Any]?) -> [[String : AnyObject]] {
+        
+        if let sourceArray = objectArray as? [ProductOption] {
+            var retArray = [[String:AnyObject]]()
+            for anItem in sourceArray {
+                let newItem = anItem.toDictionary()
+                retArray.append(newItem)
+            }
+            return retArray
+        }
+        else {
+            
+            return [["":"" as AnyObject]]
+        }
+    }
+    convenience init(from productJSON:String?) {
+        self.init()
+        guard productJSON != nil else {
+            return
+        }
+        
+        
+        do {
+            if let productJSONDict = try JSONSerialization.jsonObject(with: productJSON?.data(using: .utf8) ?? Data(), options: .allowFragments) as? Dictionary<String, Any> {
+                
+                self.id = productJSONDict["id"] as? String ?? ""
+                self.name = productJSONDict["name"] as? String ?? ""
+                
+                if let selectedImagesJSON = productJSONDict["values"] as? String{
+                    let _selectedImagesJSONObj = try JSONSerialization.jsonObject(with: selectedImagesJSON.data(using: .utf8)!, options: .allowFragments)
+                    if let selectedImagesJSONObj = _selectedImagesJSONObj as? [[String:Any]] {
+                        var _selectedImages = [String]()
+                        for _image in selectedImagesJSONObj {
+                            let imageData = try JSONSerialization.data(withJSONObject: _image, options: .prettyPrinted)
+                            if let imageJSONString = String(data: imageData, encoding: .utf8){
+                            _selectedImages.append(imageJSONString)
+                            }
+                        }
+                        self.values = _selectedImages
+                    }
+                }
+            }
+        }
+        catch {
+            
+            print("Error in converting Product Variant JSON string to a valid JSON object!")
+        }
+    }
+    
+    func toDictionary() -> [String : AnyObject] {
+        return ["id":self.id as AnyObject,
+                "name":self.name as AnyObject? ?? "" as AnyObject,
+                "values":self.values as AnyObject ?? [""] as AnyObject ]
+    }
+}
+extension Product:JSONConvertible {
+    
+    convenience init(from productJSON:String?) {
+        self.init()
+        guard productJSON != nil else {
+            return
+        }
+        
+        
+        do {
+            if let productJSONDict = try JSONSerialization.jsonObject(with: productJSON?.data(using: .utf8) ?? Data(), options: .allowFragments) as? Dictionary<String, Any> {
+                
+                self.id = productJSONDict["id"] as? String ?? ""
+                self.title = productJSONDict["title"] as? String ?? ""
+                self.productDescription = productJSONDict["productDescription"] as? String
+                if let priceString  = productJSONDict["price"] as? String {
+                    self.price = Decimal(string: priceString)
+                }
+                self.hasAlternativePrice = productJSONDict["hasAlternativePrice"] as? Bool ?? false
+                self.currency = productJSONDict["currency"] as? String ?? ""
+                self.discount = productJSONDict["discount"] as? String ?? ""
+                self.type = productJSONDict["type"] as? String ?? ""
+                self.vendor = productJSONDict["vendor"] as? String ?? ""
+                self.paginationValue = productJSONDict["paginationValue"] as? String ?? ""
+                self.additionalDescription = productJSONDict["additionalDescription"] as? String ?? ""
+                
+                if let createdAtString  = productJSONDict["createdAt"] as? String {
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZZZ"
+                    self.createdAt = dateFormatter.date(from: createdAtString)
+                }
+                if let updatedAtString  = productJSONDict["updatedAt"] as? String {
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZZZ"
+                    self.updatedAt = dateFormatter.date(from: updatedAtString)
+                    
+                }
+                
+                
+                //                public var tags: [String]?
+                //                public var variants: [ProductVariant]?
+                //                public var options: [ProductOption]?
+                //
+                if let selectedImagesJSON = productJSONDict["images"] as? String{
+                    let _selectedImagesJSONObj = try JSONSerialization.jsonObject(with: selectedImagesJSON.data(using: .utf8)!, options: .allowFragments)
+                    if let selectedImagesJSONObj = _selectedImagesJSONObj as? [[String:Any]] {
+                        var _selectedImages = [Image]()
+                        for _image in selectedImagesJSONObj {
+                            let imageData = try JSONSerialization.data(withJSONObject: _image, options: .prettyPrinted)
+                            let imageJSONString = String(data: imageData, encoding: .utf8)
+                            let image = Image(from: imageJSONString)
+                            _selectedImages.append(image)
+                        }
+                        self.images = _selectedImages
+                    }
+                }
+                
+                if let selectedProductOptionsJSON = productJSONDict["options"] as? String{
+                    let _selectedProductOptionsJSONObj = try JSONSerialization.jsonObject(with: selectedProductOptionsJSON.data(using: .utf8)!, options: .allowFragments)
+                    if let selectedProductOptionsJSONObj = _selectedProductOptionsJSONObj as? [[String:Any]] {
+                        var _selectedProductOptions = [ProductOption]()
+                        for _productOption in selectedProductOptionsJSONObj {
+                            let productOptionData = try JSONSerialization.data(withJSONObject: _productOption, options: .prettyPrinted)
+                            let productOptionJSONString = String(data: productOptionData, encoding: .utf8)
+                            let productOption = ProductOption(from: productOptionJSONString)
+                            _selectedProductOptions.append(productOption)
+                        }
+                        self.options = _selectedProductOptions
+                    }
+                }
+                
+                if let selectedImagesJSON = productJSONDict["variants"] as? String{
+                    let _selectedImagesJSONObj = try JSONSerialization.jsonObject(with: selectedImagesJSON.data(using: .utf8)!, options: .allowFragments)
+                    if let selectedImagesJSONObj = _selectedImagesJSONObj as? [[String:Any]] {
+                        var _selectedImages = [ProductVariant]()
+                        for _image in selectedImagesJSONObj {
+                            let imageData = try JSONSerialization.data(withJSONObject: _image, options: .prettyPrinted)
+                            let imageJSONString = String(data: imageData, encoding: .utf8)
+                            let image = ProductVariant(from: imageJSONString)
+                            _selectedImages.append(image)
+                        }
+                        self.variants = _selectedImages
+                    }
+                }
+                
+                
+                if let selectedTagsJSON = productJSONDict["tags"] as? String{
+                    let _selectedTagsJSONObj = try JSONSerialization.jsonObject(with: selectedTagsJSON.data(using: .utf8)!, options: .allowFragments)
+                    if let selectedTagsJSONObj = _selectedTagsJSONObj as? [[String:Any]] {
+                        var _selectedTags = [String]()
+                        for _image in selectedTagsJSONObj {
+                            let tagData = try JSONSerialization.data(withJSONObject: _image, options: .prettyPrinted)
+                            if let tag = String(data: tagData, encoding: .utf8){
+                                _selectedTags.append(tag)
+                            }
+                        }
+                        self.tags = _selectedTags
+                    }
+                }
+                
+            }
+        }
+        catch {
+            
+            print("Error in converting Product Variant JSON string to a valid JSON object!")
+        }
+    }
+    func getStringFromDate(from date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZZZ"
+        return dateFormatter.string(from: date)
+    }
+    
+    static func toDictionaryArray(source objectArray:[Any]?) -> [[String : AnyObject]] {
+        
+        if let sourceArray = objectArray as? [Product] {
+            var retArray = [[String:AnyObject]]()
+            for anItem in sourceArray {
+                let newItem = anItem.toDictionary()
+                retArray.append(newItem)
+            }
+            return retArray
+        }
+        else {
+            return [["":"" as AnyObject]]
+        }
+    }
+    
+    func toDictionary() -> [String : AnyObject] {
+        return ["id":self.id as AnyObject,
+                "title":self.title as AnyObject? ?? "" as AnyObject,
+                "productDescription":self.productDescription as AnyObject? ?? "" as AnyObject,
+                "price":self.price as AnyObject? ?? 0.0 as AnyObject,
+                "hasAlternativePrice":self.hasAlternativePrice as AnyObject,
+                "currency":self.currency as AnyObject? ?? "" as AnyObject,
+                "discount":self.discount as AnyObject? ?? "" as AnyObject,
+                "images":Image.toDictionaryArray(source: self.images) as AnyObject,
+                "type":self.type as AnyObject? ?? "" as AnyObject,
+                "vendor":self.vendor as AnyObject? ?? "" as AnyObject,
+                "createdAt": self.getStringFromDate(from: self.createdAt ?? Date()) as AnyObject? ?? "" as AnyObject,
+                "updatedAt":self.getStringFromDate(from: self.updatedAt ?? Date()) as AnyObject? ?? "" as AnyObject,
+                "tags":self.tags as AnyObject? ?? "" as AnyObject,
+                "paginationValue":self.paginationValue as AnyObject? ?? "" as AnyObject,
+                "additionalDescription":self.additionalDescription as AnyObject? ?? "" as AnyObject,
+                "variants": ProductVariant.toDictionaryArray(source: self.variants) as AnyObject ,
+                "options":ProductOption.toDictionaryArray(source: self.options) as AnyObject]
+    }
+}
 
-//extension Product:JSONConvertible {
-//
-//    convenience init(from productJSON:String?) {
-//        self.init()
-//        guard productJSON != nil else {
-//            return
-//        }
-//
-//
-//        do {
-//            if let productJSONDict = try JSONSerialization.jsonObject(with: productJSON?.data(using: .utf8) ?? Data(), options: .allowFragments) as? Dictionary<String, Any> {
-//
-//                self.id = productJSONDict["id"] as? String ?? ""
-//                self.title = productJSONDict["title"] as? String ?? ""
-//                self.productDescription = productJSONDict["productDescription"] as? String
-//                if let priceString  = productJSONDict["price"] as? String {
-//                    self.price = Decimal(string: priceString)
-//                }
-//                self.hasAlternativePrice = productJSONDict["hasAlternativePrice"] as? Bool ?? false
-//                self.currency = productJSONDict["currency"] as? String ?? ""
-//                self.discount = productJSONDict["discount"] as? String ?? ""
-//                self.type = productJSONDict["type"] as? String ?? ""
-//                self.vendor = productJSONDict["vendor"] as? String ?? ""
-//                self.paginationValue = productJSONDict["paginationValue"] as? String ?? ""
-//                self.additionalDescription = productJSONDict["additionalDescription"] as? String ?? ""
-//
-//                if let createdAtString  = productJSONDict["createdAt"] as? String {
-//                    let dateFormatter = DateFormatter()
-//                    dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZZZ"
-//                    self.createdAt = dateFormatter.date(from: createdAtString)
-//                }
-//                if let updatedAtString  = productJSONDict["updatedAt"] as? String {
-//                    let dateFormatter = DateFormatter()
-//                    dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZZZ"
-//                    self.updatedAt = dateFormatter.date(from: updatedAtString)
-//
-//                }
-//
-//
-////                public var tags: [String]?
-////                public var variants: [ProductVariant]?
-////                public var options: [ProductOption]?
-////
-//                if let selectedImagesJSON = productJSONDict["images"] as? String{
-//                    let _selectedImagesJSONObj = try JSONSerialization.jsonObject(with: selectedImagesJSON.data(using: .utf8)!, options: .allowFragments)
-//                    if let selectedImagesJSONObj = _selectedImagesJSONObj as? [[String:Any]] {
-//                        var _selectedImages = [Image]()
-//                        for _image in selectedImagesJSONObj {
-//                            let imageData = try JSONSerialization.data(withJSONObject: _image, options: .prettyPrinted)
-//                            let imageJSONString = String(data: imageData, encoding: .utf8)
-//                            let image = Image(from: imageJSONString)
-//                            _selectedImages.append(image)
-//                        }
-//                        self.images = _selectedImages
-//                    }
-//                }
-//
-//                if let priceString  = productJSONDict["price"] as? String {
-//
-//                    self.price = Decimal(string: priceString)
-//                }
-//
-//                if let selectedOptionsJSON = productJSONDict["selectedOptions"] as? String{
-//
-//                    let _selectedOptionsJSONObj = try JSONSerialization.jsonObject(with: selectedOptionsJSON.data(using: .utf8)!, options: .allowFragments)
-//                    if let selectedOptionsJSONObj = _selectedOptionsJSONObj as? [[String:Any]] {
-//                        var _selectedOptions = [VariantOption]()
-//                        for _image in selectedOptionsJSONObj {
-//
-//                            let variantOptionData = try JSONSerialization.data(withJSONObject: _image, options: .prettyPrinted)
-//                            let variantOptionJSONString = String(data: variantOptionData, encoding: .utf8)
-//                            let variantOption = VariantOption(from: variantOptionJSONString)
-//                            _selectedOptions.append(variantOption)
-//                        }
-//                        self.selectedOptions = _selectedOptions
-//                    }
-//                }
-//            }
-//        }
-//        catch {
-//
-//            print("Error in converting Product Variant JSON string to a valid JSON object!")
+// ShopifyAPI
+    
+//     func productConnectionQuery() -> (Storefront.ProductConnectionQuery) -> Void {
+//        return { (query: Storefront.ProductConnectionQuery) in
+//            query.edges({ $0
+//                .cursor()
+//                .node(self.productQuery(variantsPriceNeeded: false)) // true to false
+//            })
 //        }
 //    }
-//
-//    func toDictionary() -> [String : AnyObject] {
-//        return ["id":self.id as AnyObject, "title":self.title as AnyObject? ?? "" as AnyObject, "price":self.price as AnyObject? ?? "" as AnyObject, "available":self.available as AnyObject, "productId":self.productId as AnyObject, "image":self.image?.toDictionary() as AnyObject, "selectedOptions":VariantOption.toDictionaryArray(source: self.selectedOptions!) as AnyObject]
-//    }
+
+
+//ShopifyProductAdapter
+//static func adapt(item: Storefront.ProductEdge?, currencyValue: String?) -> Product? {
+//    let product = adapt(item: item?.node, currencyValue: currencyValue, isShortVariant: false) // true to false
+//    product?.paginationValue = item?.cursor
+//    return product
 //}
 
 

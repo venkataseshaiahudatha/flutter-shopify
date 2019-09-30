@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
 
 
 
-//    getProductsList(); //variantList is coming  null in this call
+    getProductsList(); //variantList is coming  null in this call
 //    getProduct(); //variantList is present in individual product call
 //    getProductVariants();
 //    searchProductList();
@@ -181,7 +181,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> getProductsList() async {
-    List<Product> products =  await Shopify.getProductList(150, null, null, null, null);
+    List<Product> products =  await Shopify.getProductList(10, null, null, null, sort.SortType.NAME);
     print('Products - $products');
   }
 
@@ -245,7 +245,7 @@ class _MyAppState extends State<MyApp> {
   Future<void> signIn() async {
     //bool val = await Shopify.signIn("imei3559230619@gmail.com", "bFppaybqvWaD6CZXF2");
     //bool val = await Shopify.signIn("test@gmail.com", "test123456");
-    bool val = await Shopify.signIn("test1@gmail.com", "test987654");
+    bool val = await Shopify.signIn("test1@gmail.com", "abcd987654");
     print('Result - $val');
     getCustomer();
   }
@@ -291,8 +291,8 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> getCustomer() async {
 
-    createCustomerAddress();
-    getCountries();
+//    createCustomerAddress();
+//    getCountries();
     //    setDefaultShippingAddress();
  //   editCustomerAddress();
  //   deleteCustomerAddress();
@@ -301,8 +301,8 @@ class _MyAppState extends State<MyApp> {
 
    // updateCustomerSettings();
     //Z2lkOi8vc2hvcGlmeS9NYWlsaW5nQWRkcmVzcy8yNTg3MDM1MDc0NjE5P21vZGVsX25hbWU9Q3VzdG9tZXJBZGRyZXNzJmN1c3RvbWVyX2FjY2Vzc190b2tlbj1rVExEeTNydE95WXM1SjdVY2NUM2VMbTliZEVxcHpIUUpiOW01cEE3alRJQzhhWTZXNGZHX2pSRjlQRzVEWW5qWVowSzFkaE1mdEJJVFRaYWpjeHBXSGdLTVRfSzdVMkNFb19oN20zT2c3VmcyTkhvLW80XzhTOG9tRkV1aFVPRF9yaHU2SnJKWGIza18wRUJHMkc4MW5CYjhjSk9ROFR5d082aVdtZmlkZEprNmlBSmw4eTVRUXp1bVA4ejFKUE85SFhRR2J0MWUwcnp0a21ZdHZzb3pQZm0waGg2eGFKTFllRE1lcWdBWGF6d19QX0dSN3lYRVJEQm94VUZIRWV4
-//    Customer customer = await Shopify.getCustomer();
-//    print('Result - $customer');
+    Customer customer = await Shopify.getCustomer();
+    print('Result - $customer');
 
 
    // forgotPassword();

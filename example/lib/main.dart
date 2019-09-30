@@ -57,10 +57,10 @@ class _MyAppState extends State<MyApp> {
 
 
 
-    getProductsList(); //variantList is coming  null in this call
-//    getProduct(); //variantList is present in individual product call
-//    getProductVariants();
-//    searchProductList();
+   // getProductsList(); //variantList is coming  null in this call
+    //getProduct(); //variantList is present in individual product call
+   // getProductVariants();
+   // searchProductList();
 
    // getCategories();
  //   getCategoryDetails();
@@ -68,7 +68,7 @@ class _MyAppState extends State<MyApp> {
 //    getArticleList(); //ArticleList is itself empty
 //    getArticle();
 
-//    getShopInfo();
+    getShopInfo();
 
 //    signUp(); // phone no with country code is mandatory
 
@@ -186,7 +186,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> getProduct() async {
-    Product product = await Shopify.getProduct("Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE0NzgxNjU3NTgwMTE=");
+    Product product = await Shopify.getProduct("Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5NzU0NjExMTgwMTE=");
     print('Product - $product');
   }
 
@@ -203,7 +203,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> getProductVariants() async {
-    List<Product> products =  await Shopify.getProductList(5, null, null, null, null);
+    List<Product> products =  await Shopify.getProductList(5, null, null, null, sort.SortType.NAME);
     List<String> productVariantIds = new List();
     products.forEach((product) {
       for (int i = 0 ; i < product.variants.length; i++) {
@@ -211,10 +211,10 @@ class _MyAppState extends State<MyApp> {
       }
     });
 
-    Product product = await Shopify.getProduct("Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE0NzgxNjU3NTgwMTE=");
-    for (int i = 0 ; i < product.variants.length; i++) {
-      productVariantIds.add(product.variants[i].id);
-    }
+//    Product product = await Shopify.getProduct("Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5NzU0NjExMTgwMTE=");
+//    for (int i = 0 ; i < product.variants.length; i++) {
+//      productVariantIds.add(product.variants[i].id);
+//    }
     print('main : ProductVariantListManual - $productVariantIds');
 
     List<ProductVariant> productVariants =  await Shopify.getProductVariantList(productVariantIds);
@@ -247,7 +247,7 @@ class _MyAppState extends State<MyApp> {
     //bool val = await Shopify.signIn("test@gmail.com", "test123456");
     bool val = await Shopify.signIn("test1@gmail.com", "abcd987654");
     print('Result - $val');
-    getCustomer();
+   // getCustomer();
   }
 
   Future<void> getAccessToken() async {

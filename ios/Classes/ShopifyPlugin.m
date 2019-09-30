@@ -59,7 +59,14 @@
                          with:[[GetCountriesUseCase alloc]initWith:self.mPluginContext]];
     [provider registerUseCase:@"getProductList"
                          with:[[GetProductListUseCase alloc]initWith:self.mPluginContext]];
-    
+    [provider registerUseCase:@"searchProductList"
+                         with:[[SearchProductListUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"getProduct"
+                         with:[[GetProductUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"getProductVariantList"
+                         with:[[GetProductVariantListUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"getShopInfo"
+                         with:[[GetShopInfoUseCase alloc]initWith:self.mPluginContext]];
     }
 
 @end

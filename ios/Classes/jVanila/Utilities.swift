@@ -805,5 +805,24 @@ extension Product:JSONConvertible {
 //    return product
 //}
 
+extension Shop : JSONConvertible {
+    func toDictionary() -> [String : AnyObject] {
+        return ["name":self.name as AnyObject,
+                "description":self.shopDescription as AnyObject? ?? "" as AnyObject]
+//        ,
+//                "privacyPolicy":self.privacyPolicy?.toDictionary() as AnyObject? ?? "" as AnyObject,
+//                "refundPolicy":self.refundPolicy?.toDictionary() as AnyObject? ?? 0.0 as AnyObject,
+//                "termsOfService":self.termsOfService?.toDictionary() as AnyObject]
+    }
+}
+
+extension Policy : JSONConvertible {
+    func toDictionary() -> [String : AnyObject] {
+        return ["title":self.title as AnyObject,
+                "body":self.body as AnyObject? ?? "" as AnyObject,
+                "url":self.url as AnyObject? ?? "" as AnyObject]
+    }
+}
+
 
 

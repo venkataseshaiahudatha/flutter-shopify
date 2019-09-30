@@ -364,6 +364,7 @@ extension Address {
         do {
             if let addressJSONDict = try JSONSerialization.jsonObject(with: addressJSONObject.data(using: .utf8) ?? Data(), options: .allowFragments) as? Dictionary<String, String> {
                 
+                
                 addressObj.firstName = addressJSONDict["firstName"]
                 addressObj.lastName = addressJSONDict["lastName"]
                 addressObj.address = addressJSONDict["address"]
@@ -502,7 +503,36 @@ extension Order:JSONConvertible {
 extension Customer:JSONConvertible {
     
     func toDictionary() -> [String : AnyObject] {
-        return ["id":self.email as AnyObject,"email":self.email as AnyObject, "firstName":self.firstName as AnyObject? ?? "" as AnyObject, "lastName":self.lastName as AnyObject? ?? "" as AnyObject, "phone":self.phone as AnyObject, "isAcceptsMarketing":self.promo as AnyObject, "defaultAddress":self.defaultAddress?.toDictionary() as AnyObject, "addressList":Address.toDictionaryArray(source: self.addresses) as AnyObject]
+        return ["id":self.email as AnyObject, "email":self.email as AnyObject, "firstName":self.firstName as AnyObject? ?? "" as AnyObject, "lastName":self.lastName as AnyObject? ?? "" as AnyObject, "phone":self.phone as AnyObject, "promo":self.promo as AnyObject, "defaultAddress":self.defaultAddress?.toDictionary() as AnyObject, "addresses":Address.toDictionaryArray(source: self.addresses) as AnyObject]
+    }
+}
+
+extension Author:JSONConvertible {
+    
+    func toDictionary() -> [String : AnyObject] {
+        return ["firstName":self.firstName as AnyObject, "lastName":self.lastName as AnyObject, "fullName":self.fullName as AnyObject? ?? "" as AnyObject, "email":self.email as AnyObject? ?? "" as AnyObject, "bio":self.bio as AnyObject]
+    }
+}
+
+extension Article:JSONConvertible {
+
+//    func articleAuthorToDictionary() -> [String : AnyObject] {
+//
+//        return ["bio":self.author?.bio as AnyObject , "email":self.author?.email as AnyObject , "firstName":self.author?.firstName as AnyObject, "lastName":self.author?.lastName as AnyObject, "fullName":self.author?.fullName as AnyObject]
+//    }
+//
+//    func articleEdgeToDictionary(at index:Int) -> [String : AnyObject] {
+//
+//        return ["cursor":self.blog.articles.edges[index].cursor as AnyObject, "node":self.self.blog.articles.edges[index].node.toDictionary() as AnyObject]
+//    }
+//
+//    func pageInfoToDictionary() -> [String : AnyObject] {
+//
+//        return ["cursor":self.cursor as AnyObject, "node":self.node.toDictionary() as AnyObject]
+//    }
+//
+    func toDictionary() -> [String : AnyObject] {
+        return ["id":self.id as AnyObject, "title":self.title as AnyObject? ?? "" as AnyObject, "content":self.content as AnyObject, "contentHtml":self.contentHtml as AnyObject, "image":self.image?.toDictionary() as AnyObject, "author":self.author?.toDictionary() as AnyObject, "tags":self.tags as AnyObject, "blogId":self.blogId as AnyObject, "blogTitle":self.blogTitle as AnyObject, "publishedAt":self.publishedAt as AnyObject, "url":self.url as AnyObject,"paginationValue":self.paginationValue as AnyObject]
     }
 }
 extension State:JSONConvertible {
@@ -774,5 +804,6 @@ extension Product:JSONConvertible {
 //    product?.paginationValue = item?.cursor
 //    return product
 //}
+
 
 

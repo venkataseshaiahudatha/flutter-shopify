@@ -67,6 +67,12 @@
                          with:[[GetProductVariantListUseCase alloc]initWith:self.mPluginContext]];
     [provider registerUseCase:@"getShopInfo"
                          with:[[GetShopInfoUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"createCheckout"
+                         with:[[CreateCheckoutUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"getCategoryList"
+                         with:[[GetCategoryListUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"getCategoryDetails"
+                         with:[[GetCategoryDetailsUseCase alloc]initWith:self.mPluginContext]];
     }
 
 @end

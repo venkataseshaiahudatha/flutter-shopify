@@ -48,6 +48,7 @@ class _MyAppState extends State<MyApp> {
     await Shopify.initialize(params);
 
     signIn();
+   //     createCheckout();
  //       signUp(); // phone no with country code is mandatory
 
   //  isLoggedIn();
@@ -62,13 +63,13 @@ class _MyAppState extends State<MyApp> {
    // getProductVariants();
    // searchProductList();
 
-   // getCategories();
- //   getCategoryDetails();
+   getCategories();
+   getCategoryDetails();
 
 //    getArticleList(); //ArticleList is itself empty
 //    getArticle();
 
-    getShopInfo();
+  //  getShopInfo();
 
 //    signUp(); // phone no with country code is mandatory
 
@@ -197,7 +198,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> getCategoryDetails() async {
     Category category = await Shopify.getCategoryDetails(
-        "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzY1MTk3ODY3MDY3", 15, null, sort.SortType.NAME);
+        "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzY0NTA5MjE0Nzc5", 15, null, sort.SortType.NAME);
     //Jewellery
     print('Category - $category');
   }

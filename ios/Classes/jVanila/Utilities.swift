@@ -824,5 +824,55 @@ extension Policy : JSONConvertible {
     }
 }
 
+extension ShopApp_Gateway.Category : JSONConvertible {
+
+    
+    static func toDictionaryArray(source objectArray:[Any]?) -> [[String : AnyObject]] {
+        if let sourceArray = objectArray as? [ShopApp_Gateway.Category] {
+            var retArray = [[String:AnyObject]]()
+            for anItem in sourceArray {
+                let newItem = anItem.toDictionary()
+                retArray.append(newItem)
+            }
+            return retArray
+        }
+        else {
+            return [["":"" as AnyObject]]
+        }
+    }
+    func getStringFromDate(from date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZZZ"
+        return dateFormatter.string(from: date)
+    }
+    func toDictionary() -> [String : AnyObject] {
+        return ["id": self.id as AnyObject,
+                "title":self.title as AnyObject? ?? "" as AnyObject,
+                "categoryDescription":self.categoryDescription as AnyObject? ?? "" as AnyObject,
+                "image":self.image?.toDictionary() as AnyObject,
+                "updatedAt":self.getStringFromDate(from: self.updatedAt ?? Date()) as AnyObject? ?? "" as AnyObject,
+                "paginationValue":self.paginationValue as AnyObject? ?? "" as AnyObject,
+                "additionalDescription":self.additionalDescription as AnyObject? ?? "" as AnyObject,
+                "productList": Product.toDictionaryArray(source: self.products) as AnyObject]
+    }
+    
+//    struct ShopifyCategoryAdapter {
+//        static func adapt(item: Storefront.CollectionEdge?, currencyValue: String?) -> ShopApp_Gateway.Category? {
+//            let category = adapt(item: item?.node, currencyValue: currencyValue, withProducts: true) // false to true
+//            category?.paginationValue = item?.cursor
+//            return category
+//        }
+//    }
+//    private func collectionConnectionQuery() -> (Storefront.CollectionConnectionQuery) -> Void {
+//        return { (query: Storefront.CollectionConnectionQuery) in
+//            query.edges({ $0
+//                .cursor()
+//                .node(self.collectionQuery(sortBy: nil, reverse: false,productsNeeded:true)) // added this productsNeeded:true
+//            })
+//
+//        }
+//    }
+}
+
 
 

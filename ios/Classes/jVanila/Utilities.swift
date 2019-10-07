@@ -11,24 +11,24 @@ import MobileBuySDK
 
 extension Checkout: JSONConvertible {
     
-    var payCheckout: PayCheckout {
-        let payItems = lineItems.map { item in
-            PayLineItem(price: item.price!, quantity: item.quantity)
-        }
-        let payAddress = PayAddress(addressLine1: shippingAddress?.address, addressLine2: shippingAddress?.secondAddress, city: shippingAddress?.city, country: shippingAddress?.country, province: shippingAddress?.state, zip: shippingAddress?.zip, firstName: shippingAddress?.firstName, lastName: shippingAddress?.lastName, phone: shippingAddress?.phone, email: nil)
-        
-        return PayCheckout(
-            id: id,
-            lineItems: payItems,
-            discount: nil,
-            shippingAddress: payAddress,
-            shippingRate: shippingLine?.payShippingRate,
-            subtotalPrice: subtotalPrice!,
-            needsShipping: true,
-            totalTax: Decimal(0),
-            paymentDue: totalPrice!
-        )
-    }
+//    var payCheckout: PayCheckout {
+//        let payItems = lineItems.map { item in
+//            PayLineItem(price: item.price!, quantity: item.quantity)
+//        }
+//        let payAddress = PayAddress(addressLine1: shippingAddress?.address, addressLine2: shippingAddress?.secondAddress, city: shippingAddress?.city, country: shippingAddress?.country, province: shippingAddress?.state, zip: shippingAddress?.zip, firstName: shippingAddress?.firstName, lastName: shippingAddress?.lastName, phone: shippingAddress?.phone, email: nil)
+//
+//        return PayCheckout(
+//            id: id,
+//            lineItems: payItems,
+//            discount: nil,
+//            shippingAddress: payAddress,
+//            shippingRate: shippingLine?.payShippingRate,
+//            subtotalPrice: subtotalPrice!,
+//            needsShipping: true,
+//            totalTax: Decimal(0),
+//            paymentDue: totalPrice!
+//        )
+//    }
     
     convenience init(from checkout:String?) {
         
@@ -108,13 +108,13 @@ extension Checkout: JSONConvertible {
 }
 
 extension ShippingRate: JSONConvertible {
-    var payShippingRate: PayShippingRate {
-        return PayShippingRate(
-            handle: handle,
-            title: title!,
-            price: Decimal(string: price!)!
-        )
-    }
+//    var payShippingRate: PayShippingRate {
+//        return PayShippingRate(
+//            handle: handle,
+//            title: title!,
+//            price: Decimal(string: price!)!
+//        )
+//    }
     
     convenience init(from shippngRate:String?) {
         self.init()

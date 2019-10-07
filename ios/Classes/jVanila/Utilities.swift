@@ -102,9 +102,10 @@ extension Checkout: JSONConvertible {
         }
     }
     
+    
     func toDictionary() -> [String:AnyObject] {
         
-        return ["id":self.id as AnyObject, "webUrl":self.webUrl as AnyObject , "subtotalPrice":self.subtotalPrice as AnyObject , "totalPrice":self.totalPrice as AnyObject , "shippingLine":self.shippingLine?.toDictionary() as AnyObject , "shippingAddress":self.shippingAddress?.toDictionary() as AnyObject , "currencyCode":self.currencyCode as AnyObject, "availableShippingRates": ShippingRate.toDictionaryArray(source: self.availableShippingRates) as AnyObject, "availableShippingRates": LineItem.toDictionaryArray(source: self.lineItems) as AnyObject ]
+        return ["checkoutId":self.id as AnyObject, "webUrl":self.webUrl as AnyObject , "subtotalPrice":self.subtotalPrice as AnyObject , "taxPrice":self.subtotalPrice as AnyObject ,"totalPrice":self.totalPrice as AnyObject , "shippingLine":self.shippingLine?.toDictionary() as AnyObject , "shippingAddress":self.shippingAddress?.toDictionary() as AnyObject , "currency":self.currencyCode as AnyObject, "availableShippingRates": ShippingRate.toDictionaryArray(source: self.availableShippingRates) as AnyObject, "lineItems": LineItem.toDictionaryArray(source: self.lineItems) as AnyObject ]
     }
 }
 
@@ -495,6 +496,20 @@ extension PayAddress {
 
 extension Order:JSONConvertible {
     
+    static func toDictionaryArray(source objectArray:[Any]?) -> [[String : AnyObject]] {
+        if let sourceArray = objectArray as? [Order] {
+            var retArray = [[String:AnyObject]]()
+            for anItem in sourceArray {
+                let newItem = anItem.toDictionary()
+                retArray.append(newItem)
+            }
+            return retArray
+        }
+        else {
+            return [["":"" as AnyObject]]
+        }
+    }
+    
     func toDictionary() -> [String : AnyObject] {
         return ["id":self.id as AnyObject, "firs":self.currencyCode as AnyObject? ?? "" as AnyObject, "number":self.number as AnyObject? ?? "" as AnyObject, "createdAt":self.createdAt as AnyObject, "shippingAddress":self.shippingAddress?.toDictionary() as AnyObject, "subtotalPrice":self.subtotalPrice as AnyObject, "totalPrice":self.totalPrice as AnyObject, "totalShippingPrice":self.totalShippingPrice as AnyObject, "paginationValue":self.paginationValue as AnyObject, "items":OrderItem.toDictionaryArray(source: self.items) as AnyObject]
     }
@@ -515,22 +530,22 @@ extension Author:JSONConvertible {
 }
 
 extension Article:JSONConvertible {
-
-//    func articleAuthorToDictionary() -> [String : AnyObject] {
-//
-//        return ["bio":self.author?.bio as AnyObject , "email":self.author?.email as AnyObject , "firstName":self.author?.firstName as AnyObject, "lastName":self.author?.lastName as AnyObject, "fullName":self.author?.fullName as AnyObject]
-//    }
-//
-//    func articleEdgeToDictionary(at index:Int) -> [String : AnyObject] {
-//
-//        return ["cursor":self.blog.articles.edges[index].cursor as AnyObject, "node":self.self.blog.articles.edges[index].node.toDictionary() as AnyObject]
-//    }
-//
-//    func pageInfoToDictionary() -> [String : AnyObject] {
-//
-//        return ["cursor":self.cursor as AnyObject, "node":self.node.toDictionary() as AnyObject]
-//    }
-//
+    
+    //    func articleAuthorToDictionary() -> [String : AnyObject] {
+    //
+    //        return ["bio":self.author?.bio as AnyObject , "email":self.author?.email as AnyObject , "firstName":self.author?.firstName as AnyObject, "lastName":self.author?.lastName as AnyObject, "fullName":self.author?.fullName as AnyObject]
+    //    }
+    //
+    //    func articleEdgeToDictionary(at index:Int) -> [String : AnyObject] {
+    //
+    //        return ["cursor":self.blog.articles.edges[index].cursor as AnyObject, "node":self.self.blog.articles.edges[index].node.toDictionary() as AnyObject]
+    //    }
+    //
+    //    func pageInfoToDictionary() -> [String : AnyObject] {
+    //
+    //        return ["cursor":self.cursor as AnyObject, "node":self.node.toDictionary() as AnyObject]
+    //    }
+    //
     func toDictionary() -> [String : AnyObject] {
         return ["id":self.id as AnyObject, "title":self.title as AnyObject? ?? "" as AnyObject, "content":self.content as AnyObject, "contentHtml":self.contentHtml as AnyObject, "image":self.image?.toDictionary() as AnyObject, "author":self.author?.toDictionary() as AnyObject, "tags":self.tags as AnyObject, "blogId":self.blogId as AnyObject, "blogTitle":self.blogTitle as AnyObject, "publishedAt":self.publishedAt as AnyObject, "url":self.url as AnyObject,"paginationValue":self.paginationValue as AnyObject]
     }
@@ -617,7 +632,7 @@ extension ProductOption:JSONConvertible {
                         for _image in selectedImagesJSONObj {
                             let imageData = try JSONSerialization.data(withJSONObject: _image, options: .prettyPrinted)
                             if let imageJSONString = String(data: imageData, encoding: .utf8){
-                            _selectedImages.append(imageJSONString)
+                                _selectedImages.append(imageJSONString)
                             }
                         }
                         self.values = _selectedImages
@@ -787,7 +802,7 @@ extension Product:JSONConvertible {
 }
 
 // ShopifyAPI
-    
+
 //     func productConnectionQuery() -> (Storefront.ProductConnectionQuery) -> Void {
 //        return { (query: Storefront.ProductConnectionQuery) in
 //            query.edges({ $0
@@ -809,10 +824,10 @@ extension Shop : JSONConvertible {
     func toDictionary() -> [String : AnyObject] {
         return ["name":self.name as AnyObject,
                 "description":self.shopDescription as AnyObject? ?? "" as AnyObject]
-//        ,
-//                "privacyPolicy":self.privacyPolicy?.toDictionary() as AnyObject? ?? "" as AnyObject,
-//                "refundPolicy":self.refundPolicy?.toDictionary() as AnyObject? ?? 0.0 as AnyObject,
-//                "termsOfService":self.termsOfService?.toDictionary() as AnyObject]
+        //        ,
+        //                "privacyPolicy":self.privacyPolicy?.toDictionary() as AnyObject? ?? "" as AnyObject,
+        //                "refundPolicy":self.refundPolicy?.toDictionary() as AnyObject? ?? 0.0 as AnyObject,
+        //                "termsOfService":self.termsOfService?.toDictionary() as AnyObject]
     }
 }
 
@@ -824,8 +839,9 @@ extension Policy : JSONConvertible {
     }
 }
 
-extension ShopApp_Gateway.Category : JSONConvertible {
 
+extension ShopApp_Gateway.Category : JSONConvertible {
+    
     
     static func toDictionaryArray(source objectArray:[Any]?) -> [[String : AnyObject]] {
         if let sourceArray = objectArray as? [ShopApp_Gateway.Category] {
@@ -856,22 +872,27 @@ extension ShopApp_Gateway.Category : JSONConvertible {
                 "productList": Product.toDictionaryArray(source: self.products) as AnyObject]
     }
     
-//    struct ShopifyCategoryAdapter {
-//        static func adapt(item: Storefront.CollectionEdge?, currencyValue: String?) -> ShopApp_Gateway.Category? {
-//            let category = adapt(item: item?.node, currencyValue: currencyValue, withProducts: true) // false to true
-//            category?.paginationValue = item?.cursor
-//            return category
-//        }
-//    }
-//    private func collectionConnectionQuery() -> (Storefront.CollectionConnectionQuery) -> Void {
-//        return { (query: Storefront.CollectionConnectionQuery) in
-//            query.edges({ $0
-//                .cursor()
-//                .node(self.collectionQuery(sortBy: nil, reverse: false,productsNeeded:true)) // added this productsNeeded:true
-//            })
-//
-//        }
-//    }
+    //    struct ShopifyCategoryAdapter {
+    //        static func adapt(item: Storefront.CollectionEdge?, currencyValue: String?) -> ShopApp_Gateway.Category? {
+    //            let category = adapt(item: item?.node, currencyValue: currencyValue, withProducts: true) // false to true
+    //            category?.paginationValue = item?.cursor
+    //            return category
+    //        }
+    //    }
+    //    private func collectionConnectionQuery() -> (Storefront.CollectionConnectionQuery) -> Void {
+    //        return { (query: Storefront.CollectionConnectionQuery) in
+    //            query.edges({ $0
+    //                .cursor()
+    //                .node(self.collectionQuery(sortBy: nil, reverse: false,productsNeeded:true)) // added this productsNeeded:true
+    //            })
+    //
+    //        }
+    //    }
+    
+    
+    
+    
+    
 }
 
 

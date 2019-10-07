@@ -73,6 +73,16 @@
                          with:[[GetCategoryListUseCase alloc]initWith:self.mPluginContext]];
     [provider registerUseCase:@"getCategoryDetails"
                          with:[[GetCategoryDetailsUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"getOrders"
+                         with:[[GetOrdersUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"getOrder"
+                         with:[[GetOrderUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"getShippingRates"
+                         with:[[GetShippingRatesUseCase alloc]initWith:self.mPluginContext]];
+    
+    [provider registerUseCase:@"setShippingAddress"
+                         with:[[SetShippingAddressUseCase alloc]initWith:self.mPluginContext]];
+    
     }
 
 @end

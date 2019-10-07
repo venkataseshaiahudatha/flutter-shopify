@@ -372,7 +372,7 @@ class _MyAppState extends State<MyApp> {
     Customer customer = await Shopify.editCustomerInfo("Seshu", "Udatha", "+919985023259","test1@gmail.com")
     .then((value){
       print("Got error: ${value}");
-    }) // Future completes with two()'s error.
+    }) // Future cflompletes with two()'s error.
     .catchError((e) {
       print("Got error: ${e}");     // Finally, callback fires.
     });

@@ -57,7 +57,11 @@ target 'Runner' do
   use_frameworks!
 
   # Shopify
-  pod 'ShopApp_Shopify'
+  #  pod 'ShopApp_Shopify'
+  pod 'Alamofire'
+  pod 'Mobile-Buy-SDK'
+  pod 'ShopApp_Gateway'
+  pod 'KeychainSwift'
 
   # DI
   pod 'Swinject'

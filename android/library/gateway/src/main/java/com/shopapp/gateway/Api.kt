@@ -7,6 +7,9 @@ interface Api {
     fun getProductList(perPage: Int, paginationValue: Any? = null, sortBy: SortType? = null,
                        keyword: String?, excludeKeyword: String?, callback: ApiCallback<List<Product>>)
 
+    fun getProductListByDiscountAndVendor(perPage: Int, paginationValue: Any? = null, sortBy: SortType? = null,
+                       discount: String?, vendor: String?, callback: ApiCallback<List<Product>>)
+
     fun getProductVariantList(productVariantIdList: List<String>, callback: ApiCallback<List<ProductVariant>>)
 
     fun searchProductList(perPage: Int, paginationValue: Any? = null, searchQuery: String,

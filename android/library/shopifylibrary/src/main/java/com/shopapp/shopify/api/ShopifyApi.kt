@@ -33,6 +33,7 @@ import com.shopapp.shopify.constant.Constant.ACCESS_TOKEN
 import com.shopapp.shopify.constant.Constant.AND_LOGICAL_KEY
 import com.shopapp.shopify.constant.Constant.COUNTRIES_FILE_NAME
 import com.shopapp.shopify.constant.Constant.DEFAULT_SCHEME
+import com.shopapp.shopify.constant.Constant.DISCOUNT_FILTER_KEY
 import com.shopapp.shopify.constant.Constant.EMAIL
 import com.shopapp.shopify.constant.Constant.EXPIRES_DATE
 import com.shopapp.shopify.constant.Constant.ITEMS_COUNT
@@ -42,6 +43,7 @@ import com.shopapp.shopify.constant.Constant.RETRY_HANDLER_DELAY
 import com.shopapp.shopify.constant.Constant.RETRY_HANDLER_MAX_COUNT
 import com.shopapp.shopify.constant.Constant.TITLE_FILTER_KEY
 import com.shopapp.shopify.constant.Constant.UNAUTHORIZED_ERROR
+import com.shopapp.shopify.constant.Constant.VENDOR_FILTER_KEY
 import com.shopapp.shopify.util.AssetsReader
 import com.shopify.buy3.*
 import com.shopify.graphql.support.ID
@@ -570,6 +572,14 @@ class ShopifyApi : Api {
         if (sortBy == SortType.TYPE && keyword != null) {
             phrase = "-$TITLE_FILTER_KEY\"$excludeKeyword\" $AND_LOGICAL_KEY $PRODUCT_TYPE_FILTER_KEY\"$keyword\""
         }
+        queryProducts(perPage, paginationValue, phrase, reverse, sortBy, callback)
+    }
+
+    override fun getProductListByDiscountAndVendor(perPage: Int, paginationValue: Any?, sortBy: SortType?,
+                                discount: String?, vendor: String?,
+                                callback: ApiCallback<List<Product>>) {
+        val reverse = sortBy == SortType.RECENT
+        var phrase = "$DISCOUNT_FILTER_KEY\"*($discount)*\" $AND_LOGICAL_KEY $VENDOR_FILTER_KEY\$vendor\""
         queryProducts(perPage, paginationValue, phrase, reverse, sortBy, callback)
     }
 

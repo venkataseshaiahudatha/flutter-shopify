@@ -16,6 +16,7 @@ const String kArgApiPassword = "apiPassword";
 
 // Get Product List Method Call
 const String kMethodGetProductList = "getProductList";
+const String kMethodGetProductListByDiscountAndVendor = "getProductListByDiscountAndVendor";
 
 const String kArgKeyword = "keyword";
 const String kArgExcludeKeyword = "excludeKeyword";

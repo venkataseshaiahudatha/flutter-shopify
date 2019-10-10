@@ -74,6 +74,30 @@ class Shopify {
     return response;
   }
 
+
+  static Future<List<Product>> getProductListByDiscountAndVendor(int perPage,
+      dynamic paginationValue, String discount, String vendor,
+      SortType sortBy) async {
+
+    Map<dynamic, dynamic> args = new Map();
+    args[kArgPerPage] = perPage;
+    args[kArgPaginationValue] = paginationValue;
+
+    args["discount"] = discount;
+    args["vendor"] = vendor;
+
+    int sortByJson = sortBy.index;
+    args[kArgSortBy] = sortByJson;
+
+    final String responseJson = await _channel.invokeMethod(
+        kMethodGetProductListByDiscountAndVendor, args);
+    final responseMap = json.decode(responseJson).cast<Map<String, dynamic>>();
+    final response = responseMap.map<Product>((json) => Product.fromJson(json))
+        .toList();
+
+    return response;
+  }
+
   static Future<List<ProductVariant>> getProductVariantList(
       List<String> productVariantIds) async {
 

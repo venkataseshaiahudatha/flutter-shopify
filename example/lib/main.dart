@@ -36,25 +36,29 @@ class _MyAppState extends State<MyApp> {
 
   Future<void>  initShopify() async {
 
-    await Shopify.platformVersion.then((val) {
+    /*await Shopify.platformVersion.then((val) {
       print(val);
-    });
+    });*/
 
     ShopifyInitializeParams params = new ShopifyInitializeParams();
-    params.domainName = "porganicworld.myshopify.com";
-    params.accessToken = "62761bc137e3dac4c66d1d1a93d8dab3";
-    params.apiKey = "1e5f1c6facb67ef0bf9e0c4af642d192";
-    params.apiPassword = "5c3061bb2e053642fc1422409ccbb89e";
+    params.domainName = "the-organic-world-store.myshopify.com";
+    params.accessToken = "3ed9f703f11052bb00c68b1adca92d29";
+    params.apiKey = "ca974c7246d4b649aecf6297a448477e";
+    params.apiPassword = "ea3ad396a00422ba4cc2f96f48f3db21";
     await Shopify.initialize(params);
 
-    signIn();
-//    getProductsList(); //variantList is coming  null in this call
+//    await searchProducts();
+
+//    await Shopify.isLoggedIn();
+
+//    signIn();
+    await getProductsList(); //variantList is coming  null in this call
 //    getProduct(); //variantList is present in individual product call
 //    getProductVariants();
 //    searchProductList();
 
-    getCategories();
-    getCategoryDetails();
+//    getCategories();
+//    getCategoryDetails();
 
 //    getArticleList(); //ArticleList is itself empty
 //    getArticle();
@@ -77,7 +81,7 @@ class _MyAppState extends State<MyApp> {
 //    editCustomerAddress();
 //    deleteCustomerAddress();
 
-    editCustomerInfo();
+//    editCustomerInfo();
 
 //    updateCustomerSettings();
 
@@ -99,11 +103,18 @@ class _MyAppState extends State<MyApp> {
 //  startShopping();
   }
 
+  Future<void> searchProducts() async {
+    List<Product> searchedItems = await Shopify.searchProductList("al", 20, null);
+    for (Product p in searchedItems) {
+      print("${p.title}");
+    }
+  }
+
   Future<void> startShopping() async {
     List<Category> categories = await Shopify.getCategoryList(5, null);
     List<Product> selectedProducts = await getSelectedProducts(categories);
     List<CartProduct> cartItems = await prepareCartItems(selectedProducts);
-    Checkout checkout = await Shopify.createCheckout(cartItems);
+    Checkout checkout = await Shopify.createCheckout(cartItems, note: " ");
 //    checkout = await Shopify.getCheckout(checkout.checkoutId);
     print('Checkout - $checkout');
   }
@@ -172,12 +183,13 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> getProductsList() async {
-    List<Product> products =  await Shopify.getProductList(150, null, null, null, null);
-    print('Products - $products');
+//    List<Product> products =  await Shopify.getProductList(10, null, "keyword", "exclude", sort.SortType.TYPE);
+    List<Product> products =  await Shopify.getProductListByDiscountAndVendor(10, null, "25D", "ORGANIC TATTVA", sort.SortType.TYPE);
+//    print('Products - $products');
   }
 
   Future<void> getProduct() async {
-    Product product = await Shopify.getProduct("Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE0NzgxNjU3NTgwMTE=");
+    Product product = await Shopify.getProduct("Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzk3Mzg3MjEzNjIzOQ==");
     print('Product - $product');
   }
 
@@ -188,7 +200,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> getCategoryDetails() async {
     Category category = await Shopify.getCategoryDetails(
-        "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzY1MTk3ODY3MDY3", 15, null, sort.SortType.NAME);
+        "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzQ0MDY4MjQxNDU1", 15, null, sort.SortType.NAME);
     //Jewellery
     print('Category - $category');
   }
@@ -234,11 +246,11 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> signIn() async {
-    //bool val = await Shopify.signIn("imei3559230619@gmail.com", "bFppaybqvWaD6CZXF2");
-    bool val = await Shopify.signIn("test@gmail.com", "test123456");
+    //bool val = await Shopify.signIn("imei355923070770619@gmail.com", "bFppaybqvWaD6CZdAtL5T7FN1XF2");
+    bool val = await Shopify.signIn("testamigopal+a1@gmail.com", "123456");
 
     print('Result - $val');
-    getCustomer();
+//    getCustomer();
   }
 
   Future<void> getAccessToken() async {
@@ -252,7 +264,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> signUp() async {
-    String val = await Shopify.signUp("first_name", "last_name", "test@gmail.com", "test123456", "+911234567890");
+    String val = await Shopify.signUp("pragna", "katreddy", "pragna.0303@gmail.com", "12345", "+918985940000");
     print('Result - $val');
   }
 
@@ -262,12 +274,12 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> forgotPassword() async {
-    bool val = await Shopify.forgotPassword("test@gmail.com");
+    bool val = await Shopify.forgotPassword("pallavis@purnatva.com");
     print('Result - $val');
   }
 
   Future<void> changePassword() async {
-    bool val = await Shopify.changePassword("abc123");
+    bool val = await Shopify.changePassword("abc123-");
     print('Result - $val');
   }
 
@@ -291,13 +303,13 @@ class _MyAppState extends State<MyApp> {
     Address address = new Address();
     address.address = "primary address";
     address.secondAddress = "second Address";
-    address.city = "my city";
-    address.state = "my state";
-    address.country = "my country";
-    address.firstName = "my first name";
-    address.lastName = "my last name";
-    address.zip = "123456";
-    address.phone = "+911234567890";
+    address.city = "blr city";
+    address.state = "Karnataka";
+    address.country = "INDIA";
+    address.firstName = "pragna";
+    address.lastName = "k";
+    address.zip = "560078";
+    address.phone = "+918985940000";
     String addressId = await Shopify.createCustomerAddress(address);
     print('Result - $addressId');
   }
@@ -307,14 +319,14 @@ class _MyAppState extends State<MyApp> {
     address.id = "Z2lkOi8vc2hvcGlmeS9NYWlsaW5nQWRkcmVzcy83OTcwMTE2MDc2MTE/bW9kZWxfbmFtZT1DdXN0b21lckFkZHJlc3MmY3VzdG9tZXJfYWNjZXNzX3Rva2VuPTZDUEtFaUJxRk9LdEVpQTRIYks1MHdCVTJubkI3Yzc3NW84ZXNnZUxfMUVFbEFtOWhRcExzRFgyOEozejhkTnE2SFRwX2J4SThqc0NlcTlIUE9mWW9vM3F4bXdraUs3aktJQ1E0SVVzMktqS19RLVFCeDhWdW9sWjRDNjdkbjVRWTJROUJkSHYxaGpSQUlELXlsb19YaDBiZGRZWjB2alltdE5Ueklsbm5ZZnlwSzlaM09adVdmUXVFRVlLeE9NYkFTbG5lTGhDNDgyQ1J0QUhTYS1ZTl9yS3dQNW9RbVVmb0QxRDRlaHZlbGdNS0hVY0xtcEgzOHJMWUJKbDJBazI=";
     address.address = "primary address changed";
     address.secondAddress = "second Address changed";
-    address.city = "my city";
-    address.state = "my state";
-    address.country = "my country";
-    address.firstName = "my first name1";
-    address.lastName = "my last name1";
-    address.zip = "654321";
+    address.city = "blr city";
+    address.state = "Karnataka";
+    address.country = "INDIA";
+    address.firstName = "pallavi";
+    address.lastName = "s";
+    address.zip = "560078";
     address.company = "Office";
-    address.phone = "+910123456789";
+    address.phone = "+918985940000";
     bool val = await Shopify.editCustomerAddress(address.id, address);
     print('Result - $val');
   }
@@ -326,7 +338,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> editCustomerInfo() async {
-    Customer customer = await Shopify.editCustomerInfo("name", "last_name", "+911234567890","test123@gmail.com")
+    Customer customer = await Shopify.editCustomerInfo("pallavi", "s", "+918985941111","seshu.mca@test")
     .then((value){
       print("Got error: ${value}");
     }) // Future completes with two()'s error.
@@ -353,7 +365,8 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> createCheckout() async {
     List<CartProduct> cartProducts = prepareCartProducts();
-    Checkout checkout = await Shopify.createCheckout(cartProducts);
+    Checkout checkout = await Shopify.createCheckout(cartProducts,
+        note: "spl note");
     print('Result - $checkout');
   }
 
@@ -384,13 +397,13 @@ class _MyAppState extends State<MyApp> {
     address.id = "Z2lkOi8vc2hvcGlmeS9NYWlsaW5nQWRkcmVzcy83OTcwMTE2MDc2MTE/bW9kZWxfbmFtZT1DdXN0b21lckFkZHJlc3MmY3VzdG9tZXJfYWNjZXNzX3Rva2VuPTZDUEtFaUJxRk9LdEVpQTRIYks1MHdCVTJubkI3Yzc3NW84ZXNnZUxfMUVFbEFtOWhRcExzRFgyOEozejhkTnE2SFRwX2J4SThqc0NlcTlIUE9mWW9vM3F4bXdraUs3aktJQ1E0SVVzMktqS19RLVFCeDhWdW9sWjRDNjdkbjVRWTJROUJkSHYxaGpSQUlELXlsb19YaDBiZGRZWjB2alltdE5Ueklsbm5ZZnlwSzlaM09adVdmUXVFRVlLeE9NYkFTbG5lTGhDNDgyQ1J0QUhTYS1ZTl9yS3dQNW9RbVVmb0QxRDRlaHZlbGdNS0hVY0xtcEgzOHJMWUJKbDJBazI=";
     address.address = "primary address changed";
     address.secondAddress = "second Address changed";
-    address.city = "my city";
-    address.state = "my state";
-    address.country = "my country";
-    address.firstName = "my name";
-    address.lastName = "my last name";
-    address.zip = "678901";
-    address.phone = "+919876543210";
+    address.city = "blr city";
+    address.state = "Karnataka";
+    address.country = "INDIA";
+    address.firstName = "pallavi";
+    address.lastName = "s";
+    address.zip = "560078";
+    address.phone = "+918985940000";
     Checkout checkout = await Shopify.setShippingAddress("Z2lkOi8vc2hvcGlmeS9DaGVja291dC9hNjc0NjY4MDcwZThhMjcyNzAyZmM0ZWMwYTAwOTNhMj9rZXk9Nzc2YzJkNWJmZWY2OTNlZjMxY2U0NmViMDBjMjMyMGY=", address);
     print('Result - $checkout');
   }
@@ -426,13 +439,13 @@ class _MyAppState extends State<MyApp> {
     address.id = "Z2lkOi8vc2hvcGlmeS9NYWlsaW5nQWRkcmVzcy83OTcwMTE2MDc2MTE/bW9kZWxfbmFtZT1DdXN0b21lckFkZHJlc3MmY3VzdG9tZXJfYWNjZXNzX3Rva2VuPTZDUEtFaUJxRk9LdEVpQTRIYks1MHdCVTJubkI3Yzc3NW84ZXNnZUxfMUVFbEFtOWhRcExzRFgyOEozejhkTnE2SFRwX2J4SThqc0NlcTlIUE9mWW9vM3F4bXdraUs3aktJQ1E0SVVzMktqS19RLVFCeDhWdW9sWjRDNjdkbjVRWTJROUJkSHYxaGpSQUlELXlsb19YaDBiZGRZWjB2alltdE5Ueklsbm5ZZnlwSzlaM09adVdmUXVFRVlLeE9NYkFTbG5lTGhDNDgyQ1J0QUhTYS1ZTl9yS3dQNW9RbVVmb0QxRDRlaHZlbGdNS0hVY0xtcEgzOHJMWUJKbDJBazI=";
     address.address = "primary address changed";
     address.secondAddress = "second Address changed";
-    address.city = "my city";
-    address.state = "my state";
-    address.country = "my country";
-    address.firstName = "my first name";
-    address.lastName = "my last name";
-    address.zip = "123456";
-    address.phone = "+911234567980";
+    address.city = "blr city";
+    address.state = "Karnataka";
+    address.country = "INDIA";
+    address.firstName = "pallavi";
+    address.lastName = "s";
+    address.zip = "560078";
+    address.phone = "+918985940000";
 
     Order order = await Shopify.completeCheckoutByCard(checkout, "hello@hi.com", address, "ccValueToken");
     print('Result - $order');

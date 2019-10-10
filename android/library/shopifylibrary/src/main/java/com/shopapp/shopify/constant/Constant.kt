@@ -15,4 +15,6 @@ object Constant {
     const val REST_OF_WORLD = "Rest of World"
     const val COUNTRIES_FILE_NAME = "countries.json"
     const val UNAUTHORIZED_ERROR = "Unauthorized"
+    const val DISCOUNT_FILTER_KEY = "tags:"
+    const val VENDOR_FILTER_KEY = "vendor:"
 }

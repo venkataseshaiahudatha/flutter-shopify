@@ -7,7 +7,7 @@
 
 import UIKit
 import ShopApp_Gateway
-import ShopApp_Shopify
+//import ShopApp_Shopify
 import MobileBuySDK
 
 extension Checkout: JSONConvertible {

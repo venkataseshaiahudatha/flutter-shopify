@@ -51,7 +51,37 @@
                          with:[[DeleteCustomerAddressUseCase alloc]initWith:self.mPluginContext]];
     [provider registerUseCase:@"updateCustomerSettings"
                          with:[[UpdateCustomerSettingsUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"changePassword"
+                         with:[[ChangePasswordUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"forgotPassword"
+                         with:[[ForgotPasswordUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"getCountries"
+                         with:[[GetCountriesUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"getProductList"
+                         with:[[GetProductListUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"searchProductList"
+                         with:[[SearchProductListUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"getProduct"
+                         with:[[GetProductUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"getProductVariantList"
+                         with:[[GetProductVariantListUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"getShopInfo"
+                         with:[[GetShopInfoUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"createCheckout"
+                         with:[[CreateCheckoutUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"getCategoryList"
+                         with:[[GetCategoryListUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"getCategoryDetails"
+                         with:[[GetCategoryDetailsUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"getOrders"
+                         with:[[GetOrdersUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"getOrder"
+                         with:[[GetOrderUseCase alloc]initWith:self.mPluginContext]];
+    [provider registerUseCase:@"getShippingRates"
+                         with:[[GetShippingRatesUseCase alloc]initWith:self.mPluginContext]];
     
+    [provider registerUseCase:@"setShippingAddress"
+                         with:[[SetShippingAddressUseCase alloc]initWith:self.mPluginContext]];
     
     }
 

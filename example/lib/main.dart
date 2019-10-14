@@ -48,6 +48,7 @@ class _MyAppState extends State<MyApp> {
     await Shopify.initialize(params);
 
     signIn();
+    //   createCheckout();
  //       signUp(); // phone no with country code is mandatory
 
   //  isLoggedIn();
@@ -57,18 +58,18 @@ class _MyAppState extends State<MyApp> {
 
 
 
-//    getProductsList(); //variantList is coming  null in this call
-//    getProduct(); //variantList is present in individual product call
-//    getProductVariants();
-//    searchProductList();
+   // getProductsList(); //variantList is coming  null in this call
+    //getProduct(); //variantList is present in individual product call
+   // getProductVariants();
+   // searchProductList();
 
-   // getCategories();
- //   getCategoryDetails();
+//   getCategories();
+//   getCategoryDetails();
 
 //    getArticleList(); //ArticleList is itself empty
 //    getArticle();
 
-//    getShopInfo();
+  //  getShopInfo();
 
 //    signUp(); // phone no with country code is mandatory
 
@@ -96,7 +97,7 @@ class _MyAppState extends State<MyApp> {
 //    createCheckout();
 //    getCheckout();
 
-//    setShippingAddress(); //What checkOutId we should supply? - class cast exception
+  //  setShippingAddress(); //What checkOutId we should supply? - class cast exception
 //    getShippingRates();
 
 //    selectShippingRate(); // What checkOutId we should supply? - Unhandled exception
@@ -181,12 +182,12 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> getProductsList() async {
-    List<Product> products =  await Shopify.getProductList(150, null, null, null, null);
+    List<Product> products =  await Shopify.getProductList(10, null, null, null, sort.SortType.NAME);
     print('Products - $products');
   }
 
   Future<void> getProduct() async {
-    Product product = await Shopify.getProduct("Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE0NzgxNjU3NTgwMTE=");
+    Product product = await Shopify.getProduct("Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5NzU0NjExMTgwMTE=");
     print('Product - $product');
   }
 
@@ -197,13 +198,13 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> getCategoryDetails() async {
     Category category = await Shopify.getCategoryDetails(
-        "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzY1MTk3ODY3MDY3", 15, null, sort.SortType.NAME);
+        "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzY0NTA5MjE0Nzc5", 15, null, sort.SortType.NAME);
     //Jewellery
     print('Category - $category');
   }
 
   Future<void> getProductVariants() async {
-    List<Product> products =  await Shopify.getProductList(5, null, null, null, null);
+    List<Product> products =  await Shopify.getProductList(5, null, null, null, sort.SortType.NAME);
     List<String> productVariantIds = new List();
     products.forEach((product) {
       for (int i = 0 ; i < product.variants.length; i++) {
@@ -211,10 +212,10 @@ class _MyAppState extends State<MyApp> {
       }
     });
 
-    Product product = await Shopify.getProduct("Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE0NzgxNjU3NTgwMTE=");
-    for (int i = 0 ; i < product.variants.length; i++) {
-      productVariantIds.add(product.variants[i].id);
-    }
+//    Product product = await Shopify.getProduct("Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5NzU0NjExMTgwMTE=");
+//    for (int i = 0 ; i < product.variants.length; i++) {
+//      productVariantIds.add(product.variants[i].id);
+//    }
     print('main : ProductVariantListManual - $productVariantIds');
 
     List<ProductVariant> productVariants =  await Shopify.getProductVariantList(productVariantIds);
@@ -245,9 +246,15 @@ class _MyAppState extends State<MyApp> {
   Future<void> signIn() async {
     //bool val = await Shopify.signIn("imei3559230619@gmail.com", "bFppaybqvWaD6CZXF2");
     //bool val = await Shopify.signIn("test@gmail.com", "test123456");
-    bool val = await Shopify.signIn("test1@gmail.com", "test987654");
+    bool val = await Shopify.signIn("test1@gmail.com", "abcd987654");
+   // getCustomer();
     print('Result - $val');
-    getCustomer();
+    //    getOrder(); //PlatformException and null pointer exception
+    //    getProductsList();
+  createCheckout();
+    //getOrders(); //onFailure -- com.shopapp.gateway.entity.Error$NonCritical: Unauthorized
+ //   getShippingRates();
+
   }
 
   Future<void> getAccessToken() async {
@@ -272,13 +279,15 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> forgotPassword() async {
-    bool val = await Shopify.forgotPassword("test@gmail.com");
+    bool val = await Shopify.forgotPassword("test1@gmail.com");
     print('Result - $val');
   }
 
   Future<void> changePassword() async {
-    bool val = await Shopify.changePassword("abc123");
-    print('Result - $val');
+    bool val = await Shopify.changePassword("abcd987654");
+    print('changePassword Result - $val');
+    Customer customer = await Shopify.getCustomer();
+    print('getCustomer Result - $customer');
   }
 
   Future<void> getCountries() async {
@@ -289,17 +298,22 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> getCustomer() async {
 
- //   createCustomerAddress();
+    //createCustomerAddress();
+//    getCountries();
     //    setDefaultShippingAddress();
  //   editCustomerAddress();
-    deleteCustomerAddress();
+ //   deleteCustomerAddress();
 
-    // editCustomerInfo();
+  //  editCustomerInfo();
 
    // updateCustomerSettings();
     //Z2lkOi8vc2hvcGlmeS9NYWlsaW5nQWRkcmVzcy8yNTg3MDM1MDc0NjE5P21vZGVsX25hbWU9Q3VzdG9tZXJBZGRyZXNzJmN1c3RvbWVyX2FjY2Vzc190b2tlbj1rVExEeTNydE95WXM1SjdVY2NUM2VMbTliZEVxcHpIUUpiOW01cEE3alRJQzhhWTZXNGZHX2pSRjlQRzVEWW5qWVowSzFkaE1mdEJJVFRaYWpjeHBXSGdLTVRfSzdVMkNFb19oN20zT2c3VmcyTkhvLW80XzhTOG9tRkV1aFVPRF9yaHU2SnJKWGIza18wRUJHMkc4MW5CYjhjSk9ROFR5d082aVdtZmlkZEprNmlBSmw4eTVRUXp1bVA4ejFKUE85SFhRR2J0MWUwcnp0a21ZdHZzb3pQZm0waGg2eGFKTFllRE1lcWdBWGF6d19QX0dSN3lYRVJEQm94VUZIRWV4
-//    Customer customer = await Shopify.getCustomer();
-//    print('Result - $customer');
+    Customer customer = await Shopify.getCustomer();
+    print('Result - $customer');
+
+
+   // forgotPassword();
+    //changePassword();
 
 
 
@@ -355,7 +369,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> editCustomerInfo() async {
    // "first_name", "last_name", "test1@gmail.com", "test987654", "+919985024234")
-    Customer customer = await Shopify.editCustomerInfo("updated_first_name", "updated_last_name", "+919985023259","test1@gmail.com")
+    Customer customer = await Shopify.editCustomerInfo("Seshu", "Udatha", "+919985023259","test1@gmail.com")
     .then((value){
       print("Got error: ${value}");
     }) // Future cflompletes with two()'s error.
@@ -385,9 +399,18 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> createCheckout() async {
-    List<CartProduct> cartProducts = prepareCartProducts();
+    List<Product> products =  await Shopify.getProductList(5, null, null, null, sort.SortType.NAME);
+    List<CartProduct> cartProducts = new List();
+    products.forEach((product) {
+      if(product.variants.length > 0)
+      cartProducts.add(new CartProduct(productVariant: product.variants[0],
+          title: product.title, currency: product.currency, quantity: 1));
+    });
     Checkout checkout = await Shopify.createCheckout(cartProducts);
     print('Result - $checkout');
+    setShippingAddress(checkout.checkoutId); //What checkOutId we should supply? - class cast exception
+
+    //getShippingRates();
   }
 
   List<CartProduct> prepareCartProducts() {
@@ -400,10 +423,6 @@ class _MyAppState extends State<MyApp> {
         title: "dummy variant 2", price: 9.0, productId: "22"),*/
         title: "Cart Product 2", currency: "US dollar", quantity: 1));
 
-    products.add(new CartProduct(/*productVariant: new ProductVariant(id: "3",
-        title: "dummy variant 3", price: 999.0, productId: "33"),*/
-        title: "Cart Product 3", currency: "Indian Rupee", quantity: 5));
-
     return products;
   }
 
@@ -412,24 +431,25 @@ class _MyAppState extends State<MyApp> {
     print('Result - $checkout');
   }
 
-  Future<void> setShippingAddress() async {
+  Future<void> setShippingAddress(String checkoutId) async {
     Address address = new Address();
-    address.id = "Z2lkOi8vc2hvcGlmeS9NYWlsaW5nQWRkcmVzcy83OTcwMTE2MDc2MTE/bW9kZWxfbmFtZT1DdXN0b21lckFkZHJlc3MmY3VzdG9tZXJfYWNjZXNzX3Rva2VuPTZDUEtFaUJxRk9LdEVpQTRIYks1MHdCVTJubkI3Yzc3NW84ZXNnZUxfMUVFbEFtOWhRcExzRFgyOEozejhkTnE2SFRwX2J4SThqc0NlcTlIUE9mWW9vM3F4bXdraUs3aktJQ1E0SVVzMktqS19RLVFCeDhWdW9sWjRDNjdkbjVRWTJROUJkSHYxaGpSQUlELXlsb19YaDBiZGRZWjB2alltdE5Ueklsbm5ZZnlwSzlaM09adVdmUXVFRVlLeE9NYkFTbG5lTGhDNDgyQ1J0QUhTYS1ZTl9yS3dQNW9RbVVmb0QxRDRlaHZlbGdNS0hVY0xtcEgzOHJMWUJKbDJBazI=";
+    address.id = "Z2lkOi8vc2hvcGlmeS9DaGVja291dC83YWFjNmM5NDFkYzM3MDE2MDc5ZTkxNTUzMTA2YjMwYT9rZXk9YThjODdiOWMxMGIxOTUyNjQzMDZkOTYzMzQzMTZjYjE=";
     address.address = "primary address changed";
     address.secondAddress = "second Address changed";
     address.city = "my city";
-    address.state = "my state";
-    address.country = "my country";
-    address.firstName = "my name";
-    address.lastName = "my last name";
-    address.zip = "678901";
-    address.phone = "+919876543210";
-    Checkout checkout = await Shopify.setShippingAddress("Z2lkOi8vc2hvcGlmeS9DaGVja291dC9hNjc0NjY4MDcwZThhMjcyNzAyZmM0ZWMwYTAwOTNhMj9rZXk9Nzc2YzJkNWJmZWY2OTNlZjMxY2U0NmViMDBjMjMyMGY=", address);
+    address.state = "Karnataka";
+    address.country = "India";
+    address.firstName = "my first name1";
+    address.lastName = "my last name1";
+    address.zip = "560017";
+    address.company = "Office";
+    address.phone = "+910123456789";
+    Checkout checkout = await Shopify.setShippingAddress(checkoutId, address);
     print('Result - $checkout');
   }
 
   Future<void> getShippingRates() async {
-    List<ShippingRate> rates = await Shopify.getShippingRates("Z2lkOi8vc2hvcGlmeS9DaGVja291dC9hNjc0NjY4MDcwZThhMjcyNzAyZmM0ZWMwYTAwOTNhMj9rZXk9Nzc2YzJkNWJmZWY2OTNlZjMxY2U0NmViMDBjMjMyMGY=");
+    List<ShippingRate> rates = await Shopify.getShippingRates("Z2lkOi8vc2hvcGlmeS9DaGVja291dC83YWFjNmM5NDFkYzM3MDE2MDc5ZTkxNTUzMTA2YjMwYT9rZXk9YThjODdiOWMxMGIxOTUyNjQzMDZkOTYzMzQzMTZjYjE=");
     print('Result - $rates');
   }
 

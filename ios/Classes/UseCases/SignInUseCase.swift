@@ -24,14 +24,17 @@ public class SignInUseCase: UseCase {
         guard let args = methodCall.arguments as? [String:String] else {
             return
         }
-        if let emailValue = args[SignInUseCase.ARG_EMAIL] ,let passwordValue = args[SignInUseCase.ARG_PASSWORD] {
-            (mContext.api.instance as! ShopifyAPI).login(with: emailValue, password: passwordValue) { (success, error) in
-                if let errorObject = error {
-                    self.createError(withCase: "SignInUseCase", message: errorObject.errorMessage,
-                                     error: errorObject, on: result)
+        if let emailValue = args[SignInUseCase.ARG_EMAIL] ,let passwordValue = args[SignInUseCase.ARG_PASSWORD] ,
+            let shopifyAPI = mContext.api.instance as? ShopifyAPI {
+            
+            shopifyAPI.login(with: emailValue, password: passwordValue) { (success, error) in
+                
+                if let successObject = success {
+                    result(successObject)
                 } else {
-                    print(success)
-                    result(success)
+                    let errorObject = error
+                    self.createError(withCase: "SignInUseCase", message: errorObject?.errorMessage,
+                                     error: errorObject, on: result)
                 }
             }
         }

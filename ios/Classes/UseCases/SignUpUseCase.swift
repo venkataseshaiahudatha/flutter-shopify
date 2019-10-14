@@ -33,15 +33,16 @@ public class SignUpUseCase: UseCase {
             let passwordValue = args[SignUpUseCase.ARG_PASSWORD],
             let firstNameValue = args[SignUpUseCase.ARG_FIRST_NAME],
             let lastNameValue = args[SignUpUseCase.ARG_LAST_NAME],
-            let phoneValue = args[SignUpUseCase.ARG_PHONE] {
+            let phoneValue = args[SignUpUseCase.ARG_PHONE],
+            let shopifyAPI = mContext.api.instance as? ShopifyAPI {
             
-            (mContext.api.instance as! ShopifyAPI).signUp(with: emailValue, firstName: firstNameValue, lastName: lastNameValue, password: passwordValue, phone: phoneValue) { (success, error) in
-                
-                if let errorObject = error {
-                    self.createError(withCase: "SignUpUseCase", message: errorObject.errorMessage,
-                                     error: errorObject, on: result)
-                } else {
+            shopifyAPI.signUp(with: emailValue, firstName: firstNameValue, lastName: lastNameValue, password: passwordValue, phone: phoneValue) { (success, error) in
+                if let successObject = success {
                     result("success")
+                } else {
+                    let errorObject = error
+                    self.createError(withCase: "SignUpUseCase", message: errorObject?.errorMessage,
+                                     error: errorObject, on: result)
                 }
             }
         }

@@ -20,12 +20,15 @@ public class SignOutUseCase: UseCase {
     
     override public func trigger(with methodCall: FlutterMethodCall, result: @escaping (Any?) -> Void) {
         
-        (mContext.api.instance as! ShopifyAPI).logout() { (success, error) in
-            if let errorObject = error {
-                self.createError(withCase: "SignOutUseCase", message: errorObject.errorMessage,
-                                 error: errorObject, on: result)
-            } else {
-                result(success)
+        if let shopifyAPI = mContext.api.instance as? ShopifyAPI {
+            shopifyAPI.logout() { (success, error) in
+                if let successObject = success {
+                    result(successObject)
+                } else {
+                    let errorObject = error
+                    self.createError(withCase: "SignOutUseCase", message: errorObject?.errorMessage,
+                                     error: errorObject, on: result)
+                }
             }
         }
     }

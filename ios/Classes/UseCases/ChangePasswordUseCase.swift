@@ -19,25 +19,19 @@ public class ChangePasswordUseCase: UseCase {
     
     override public func trigger(with methodCall: FlutterMethodCall, result: @escaping (Any?) -> Void) {
         
-        if let args = methodCall.arguments as? [String:String] {
-            
-            if let password = args[ChangePasswordUseCase.ARG_PASSWORD] {
-                
-                (mContext.api.instance as! ShopifyAPI).updateCustomer(with: password, callback: { (customer, error) in
-                    
-                    if error != nil {
-                        
-                        self.createError(withCase: "ChangePasswordUseCase", message: error!.errorMessage, error: error!, on: result)
-                    }else {
-                        
-                        if customer != nil {
-                            result(true)
-                        }else {
-                            
-                            result(false)
-                        }
-                    }
-                })
+        guard let args = methodCall.arguments as? [String:String] else {
+            return
+        }
+        
+        if let password = args[ChangePasswordUseCase.ARG_PASSWORD],
+            let shopifyAPI = mContext.api.instance as? ShopifyAPI {
+            shopifyAPI.updateCustomer(with: password ) { (customer, error) in
+                if customer != nil {
+                    result(true)
+                } else if let errorObject = error {
+                    self.createError(withCase: "ChangePasswordUseCase", message: errorObject.errorMessage,
+                                     error: errorObject, on: result)
+                }
             }
         }
     }

@@ -1,7 +1,6 @@
 package com.jvanila.flutter.shopify;
 
 import com.jvanila.flutter.pluginarch.Plugin;
-
 import com.jvanila.flutter.pluginarch.PluginContext;
 import com.jvanila.flutter.pluginarch.UseCaseProvider;
 import com.jvanila.flutter.shopify.usecases.ChangePasswordUseCase;
@@ -24,6 +23,7 @@ import com.jvanila.flutter.shopify.usecases.GetCountriesUseCase;
 import com.jvanila.flutter.shopify.usecases.GetCustomerUseCase;
 import com.jvanila.flutter.shopify.usecases.GetOrderUseCase;
 import com.jvanila.flutter.shopify.usecases.GetOrdersUseCase;
+import com.jvanila.flutter.shopify.usecases.GetProductListByDiscountAndVendorUseCase;
 import com.jvanila.flutter.shopify.usecases.GetProductListUseCase;
 import com.jvanila.flutter.shopify.usecases.GetProductUseCase;
 import com.jvanila.flutter.shopify.usecases.GetProductVariantListUseCase;
@@ -67,6 +67,7 @@ import static com.jvanila.flutter.shopify.ShopifyConstants.METHOD_GET_ORDER;
 import static com.jvanila.flutter.shopify.ShopifyConstants.METHOD_GET_ORDERS;
 import static com.jvanila.flutter.shopify.ShopifyConstants.METHOD_GET_PRODUCT;
 import static com.jvanila.flutter.shopify.ShopifyConstants.METHOD_GET_PRODUCT_LIST;
+import static com.jvanila.flutter.shopify.ShopifyConstants.METHOD_GET_PRODUCT_LIST_BY_DISCOUNT_AND_VENDOR;
 import static com.jvanila.flutter.shopify.ShopifyConstants.METHOD_GET_PRODUCT_VARIANT_LIST;
 import static com.jvanila.flutter.shopify.ShopifyConstants.METHOD_GET_SHIPPING_RATES;
 import static com.jvanila.flutter.shopify.ShopifyConstants.METHOD_GET_SHOP_INFO;
@@ -109,6 +110,8 @@ public class ShopifyPlugin extends Plugin<ShopifyApi> {
                 new GetCategoryDetailsUseCase(pluginContext));
 
         provider.register(METHOD_GET_PRODUCT_LIST, new GetProductListUseCase(pluginContext));
+        provider.register(METHOD_GET_PRODUCT_LIST_BY_DISCOUNT_AND_VENDOR,
+                new GetProductListByDiscountAndVendorUseCase(pluginContext));
         provider.register(METHOD_GET_PRODUCT, new GetProductUseCase(pluginContext));
         provider.register(METHOD_GET_PRODUCT_VARIANT_LIST,
                 new GetProductVariantListUseCase(pluginContext));

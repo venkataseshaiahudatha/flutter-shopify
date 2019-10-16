@@ -6,6 +6,8 @@ class ShopifyConstants {
 
     static final String METHOD_GET_PRODUCT_LIST = "getProductList";
 
+    static final String METHOD_GET_PRODUCT_LIST_BY_DISCOUNT_AND_VENDOR = "getProductListByDiscountAndVendor";
+
     static final String METHOD_GET_PRODUCT_VARIANT_LIST = "getProductVariantList";
 
     static final String METHOD_SEARCH_PRODUCT_LIST = "searchProductList";

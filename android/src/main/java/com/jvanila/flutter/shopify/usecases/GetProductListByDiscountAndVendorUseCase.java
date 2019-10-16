@@ -14,18 +14,15 @@ import java.util.List;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
-/**
- * Created by pragna on 23/09/18
- */
-public class GetProductListUseCase extends ShopifyCallUseCase {
+public class GetProductListByDiscountAndVendorUseCase extends ShopifyCallUseCase {
 
     private static final String ARG_PER_PAGE = "perPage";
     private static final String ARG_PAGINATION_VALUE = "paginationValue";
     private static final String ARG_SORT_BY = "sortBy";
-    private static final String ARG_KEYWORD = "keyword";
-    private static final String ARG_EXCLUDE_KEYWORD = "excludeKeyword";
+    private static final String ARG_DISCOUNT = "discount";
+    private static final String ARG_VENDOR = "vendor";
 
-    public GetProductListUseCase(PluginContext<ShopifyApi> pluginContext) {
+    public GetProductListByDiscountAndVendorUseCase(PluginContext<ShopifyApi> pluginContext) {
         super(pluginContext);
     }
 
@@ -35,14 +32,14 @@ public class GetProductListUseCase extends ShopifyCallUseCase {
         int perPage = input.argument(ARG_PER_PAGE);
         Object paginationValue = input.argument(ARG_PAGINATION_VALUE);
 
-        String keyword = input.argument(ARG_KEYWORD);
-        String excludeKeyword = input.argument(ARG_EXCLUDE_KEYWORD);
+        String discount = input.argument(ARG_DISCOUNT);
+        String vendor = input.argument(ARG_VENDOR);
 
         int sortByIndex = input.argument(ARG_SORT_BY);
         SortType sortBy = getSortByValue(sortByIndex);
 
-        mPluginContext.api.instance.getProductList(perPage, paginationValue, sortBy,
-                keyword, excludeKeyword, new ApiCallback<List<Product>>() {
+        mPluginContext.api.instance.getProductListByDiscountAndVendor(perPage, paginationValue, sortBy,
+                discount, vendor, new ApiCallback<List<Product>>() {
 
                     @Override
                     public void onResult(List<Product> products) {
@@ -58,7 +55,7 @@ public class GetProductListUseCase extends ShopifyCallUseCase {
                     @Override
                     public void onFailure(Error error) {
                         System.out.println("onFailure -- " + error);
-                        result.error("GetProductListUseCase", error.getMessage(), error);
+                        result.error("GetProductListByDiscountAndVendorUseCase", error.getMessage(), error);
                     }
                 });
     }

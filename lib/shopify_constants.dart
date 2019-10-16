@@ -16,6 +16,7 @@ const String kArgApiPassword = "apiPassword";
 
 // Get Product List Method Call
 const String kMethodGetProductList = "getProductList";
+const String kMethodGetProductListByDiscountAndVendor = "getProductListByDiscountAndVendor";
 
 const String kArgKeyword = "keyword";
 const String kArgExcludeKeyword = "excludeKeyword";
@@ -126,6 +127,7 @@ const String kMethodGetOrder = "getOrder";
 const String kArgCheckout = "checkout";
 const String kArgCheckoutId = "checkoutId";
 const String kCartProductJson = "cartProductJson";
+const String kCheckoutSplNote = "checkoutSplNote";
 
 // Create Checkout Method Call
 const String kMethodCreateCheckout = "createCheckout";

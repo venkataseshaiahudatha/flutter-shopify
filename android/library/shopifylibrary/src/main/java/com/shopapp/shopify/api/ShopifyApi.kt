@@ -33,6 +33,7 @@ import com.shopapp.shopify.constant.Constant.ACCESS_TOKEN
 import com.shopapp.shopify.constant.Constant.AND_LOGICAL_KEY
 import com.shopapp.shopify.constant.Constant.COUNTRIES_FILE_NAME
 import com.shopapp.shopify.constant.Constant.DEFAULT_SCHEME
+import com.shopapp.shopify.constant.Constant.DISCOUNT_FILTER_KEY
 import com.shopapp.shopify.constant.Constant.EMAIL
 import com.shopapp.shopify.constant.Constant.EXPIRES_DATE
 import com.shopapp.shopify.constant.Constant.ITEMS_COUNT
@@ -42,6 +43,7 @@ import com.shopapp.shopify.constant.Constant.RETRY_HANDLER_DELAY
 import com.shopapp.shopify.constant.Constant.RETRY_HANDLER_MAX_COUNT
 import com.shopapp.shopify.constant.Constant.TITLE_FILTER_KEY
 import com.shopapp.shopify.constant.Constant.UNAUTHORIZED_ERROR
+import com.shopapp.shopify.constant.Constant.VENDOR_FILTER_KEY
 import com.shopapp.shopify.util.AssetsReader
 import com.shopify.buy3.*
 import com.shopify.graphql.support.ID
@@ -573,9 +575,17 @@ class ShopifyApi : Api {
         queryProducts(perPage, paginationValue, phrase, reverse, sortBy, callback)
     }
 
+    override fun getProductListByDiscountAndVendor(perPage: Int, paginationValue: Any?, sortBy: SortType?,
+                                discount: String?, vendor: String?,
+                                callback: ApiCallback<List<Product>>) {
+        val reverse = sortBy == SortType.RECENT
+        var phrase = "$DISCOUNT_FILTER_KEY\"*($discount)*\" $AND_LOGICAL_KEY $VENDOR_FILTER_KEY\$vendor\""
+        queryProducts(perPage, paginationValue, phrase, reverse, sortBy, callback)
+    }
+
     override fun searchProductList(perPage: Int, paginationValue: Any?,
                                    searchQuery: String, callback: ApiCallback<List<Product>>) {
-        queryProducts(perPage, paginationValue, searchQuery, true, SortType.RELEVANT , callback)
+        queryProducts(perPage, paginationValue, searchQuery, false, SortType.NAME , callback)
     }
 
     /* CATEGORY */
@@ -614,7 +624,7 @@ class ShopifyApi : Api {
                                             .cursor()
                                             .node({ productQuery ->
                                                 getDefaultProductQuery(productQuery)
-                                                    .images({ it.first(1) }, { imageConnectionQuery ->
+                                                    .images({ it.first(3) }, { imageConnectionQuery ->
                                                         imageConnectionQuery.edges({ imageEdgeQuery ->
                                                             imageEdgeQuery.node({ QueryHelper.getDefaultImageQuery(it) })
                                                         })
@@ -822,13 +832,13 @@ class ShopifyApi : Api {
 
     /* CHECKOUT */
 
-    override fun createCheckout(cartProductList: List<CartProduct>, callback: ApiCallback<Checkout>) {
+    override fun createCheckout(cartProductList: List<CartProduct>, note: String, callback: ApiCallback<Checkout>) {
 
         val input = Storefront.CheckoutCreateInput().setLineItems(
             cartProductList.map {
                 Storefront.CheckoutLineItemInput(it.quantity, ID(it.productVariant.id))
             }
-        )
+        ).setNote(note)
 
         val mutateQuery = Storefront.mutation {
             it.checkoutCreate(input) {

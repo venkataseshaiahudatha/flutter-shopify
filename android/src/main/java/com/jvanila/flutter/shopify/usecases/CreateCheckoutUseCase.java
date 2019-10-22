@@ -17,6 +17,7 @@ import io.flutter.plugin.common.MethodChannel;
 public class CreateCheckoutUseCase extends ShopifyCallUseCase {
 
     private static final String ARG_CART_PRODUCT_JSON = "cartProductJson";
+    private static final String ARG_CHECKOUT_SPL_NOTE = "checkoutSplNote";
 
     public CreateCheckoutUseCase(PluginContext<ShopifyApi> pluginContext) {
         super(pluginContext);
@@ -25,6 +26,7 @@ public class CreateCheckoutUseCase extends ShopifyCallUseCase {
     @Override
     protected void call(MethodCall input, final MethodChannel.Result result) {
         String cartProductJson = input.argument(ARG_CART_PRODUCT_JSON);
+        String note = input.argument(ARG_CHECKOUT_SPL_NOTE);
 
 //        String cartProductJson = "[{\"crudOperation\":\"U\",\"productVariant\":{\"crudOperation\":null,\"id\":\"Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC85ODMwODU2MzU5OTgz\",\"title\":\"Default Title\",\"price\":225.0,\"isAvailable\":true,\"selectedOptions\":[{\"crudOperation\":null,\"name\":\"Title\",\"value\":\"Default Title\"}],\"image\":{\"crudOperation\":null,\"id\":\"Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvMzY5Mzg2NDM1MzgzOQ==\",\"src\":\"https://cdn.shopify.com/s/files/1/0020/3633/4639/products/ARYA_ALMONDS_100G_2.JPG?v=1544681584\",\"alt\":null},\"productImage\":{\"crudOperation\":null,\"id\":\"Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvMzY5Mzg2NDM1MzgzOQ==\",\"src\":\"https://cdn.shopify.com/s/files/1/0020/3633/4639/products/ARYA_ALMONDS_100G_2.JPG?v=1544681584\",\"alt\":null},\"productId\":\"Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzEwMzk5MzI0ODk3NzU=\"},\"title\":\"ARYA ALMONDS 100G\",\"currency\":\"INR\",\"quantity\":2},{\"crudOperation\":\"U\",\"productVariant\":{\"crudOperation\":null,\"id\":\"Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC85ODE1NjU2MzY2MTI3\",\"title\":\"Default Title\",\"price\":60.0,\"isAvailable\":true,\"selectedOptions\":[{\"crudOperation\":null,\"name\":\"Title\",\"value\":\"Default Title\"}],\"image\":{\"crudOperation\":null,\"id\":\"Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvMzcwMjgwMDk0MTEwMw==\",\"src\":\"https://cdn.shopify.com/s/files/1/0020/3633/4639/products/24LM_RASAM_POWDER_100G_2.JPG?v=1545111864\",\"alt\":null},\"productImage\":{\"crudOperation\":null,\"id\":\"Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0SW1hZ2UvMzcwMjgwMDk0MTEwMw==\",\"src\":\"https://cdn.shopify.com/s/files/1/0020/3633/4639/products/24LM_RASAM_POWDER_100G_2.JPG?v=1545111864\",\"alt\":null},\"productId\":\"Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzEwMzM0OTQ2NTkxMTk=\"},\"title\":\"24LM  RASAM POWDER 100G\",\"currency\":\"INR\",\"quantity\":1}]";
 
@@ -34,7 +36,7 @@ public class CreateCheckoutUseCase extends ShopifyCallUseCase {
 
         System.out.println("CartProduct -> " + cartProducts);
 
-        mPluginContext.api.instance.createCheckout(cartProducts, new ApiCallback<Checkout>() {
+        mPluginContext.api.instance.createCheckout(cartProducts, note, new ApiCallback<Checkout>() {
             @Override
             public void onResult(Checkout checkout) {
                 if (checkout != null) {

@@ -7,7 +7,7 @@
 //
 
 import MobileBuySDK
-import ShopApp_Gateway
+//import ShopApp_Gateway
 
 struct ShopifyShippingRateAdapter {
     static func adapt(item: Storefront.ShippingRate?) -> ShippingRate? {

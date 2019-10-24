@@ -7,7 +7,7 @@
 //
 
 import MobileBuySDK
-import ShopApp_Gateway
+//import ShopApp_Gateway
 
 struct ShopifyImageAdapter {
     static func adapt(item: Storefront.Image?) -> Image? {

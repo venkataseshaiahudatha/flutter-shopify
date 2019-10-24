@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import ShopApp_Gateway
+//import ShopApp_Gateway
 //import ShopApp_Shopify
 import MobileBuySDK
 
@@ -840,11 +840,11 @@ extension Policy : JSONConvertible {
 }
 
 
-extension ShopApp_Gateway.Category : JSONConvertible {
+extension Category : JSONConvertible {
     
     
     static func toDictionaryArray(source objectArray:[Any]?) -> [[String : AnyObject]] {
-        if let sourceArray = objectArray as? [ShopApp_Gateway.Category] {
+        if let sourceArray = objectArray as? [Category] {
             var retArray = [[String:AnyObject]]()
             for anItem in sourceArray {
                 let newItem = anItem.toDictionary()
@@ -873,7 +873,7 @@ extension ShopApp_Gateway.Category : JSONConvertible {
     }
     
     //    struct ShopifyCategoryAdapter {
-    //        static func adapt(item: Storefront.CollectionEdge?, currencyValue: String?) -> ShopApp_Gateway.Category? {
+    //        static func adapt(item: Storefront.CollectionEdge?, currencyValue: String?) -> Category? {
     //            let category = adapt(item: item?.node, currencyValue: currencyValue, withProducts: true) // false to true
     //            category?.paginationValue = item?.cursor
     //            return category

@@ -7,7 +7,7 @@
 //
 
 import MobileBuySDK
-import ShopApp_Gateway
+//import ShopApp_Gateway
 
 struct ShopifyProductAdapter {
     static func adapt(item: Storefront.Product?, currencyValue: String?) -> Product? {

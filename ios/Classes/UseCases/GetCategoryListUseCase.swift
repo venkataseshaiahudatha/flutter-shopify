@@ -7,7 +7,7 @@
 
 import UIKit
 //import ShopApp_Shopify
-import ShopApp_Gateway
+//import ShopApp_Gateway
 import Flutter
 
 public class GetCategoryListUseCase: UseCase {
@@ -50,8 +50,8 @@ public class GetCategoryListUseCase: UseCase {
 
         if let shopifyAPI = mContext.api.instance as? ShopifyAPI {
             shopifyAPI.getCategoryList(perPage: perPage, paginationValue: paginationValue, sortBy: sortBy,  reverse: false) { [weak self] (categories, error) in
-                if let categoriesObject: [ShopApp_Gateway.Category] = categories {
-                    let categoriesJsonString = ShopApp_Gateway.Category.toDictionaryArray(source: categoriesObject)
+                if let categoriesObject: [Category] = categories {
+                    let categoriesJsonString = Category.toDictionaryArray(source: categoriesObject)
                     do {
                         let data = try JSONSerialization.data(withJSONObject: categoriesJsonString,  options: .prettyPrinted)
                         let resStr = String.init(data: data, encoding: .utf8) ?? ""

@@ -60,7 +60,7 @@ target 'Runner' do
   #  pod 'ShopApp_Shopify'
   pod 'Alamofire'
   pod 'Mobile-Buy-SDK'
-  pod 'ShopApp_Gateway'
+  #   pod 'ShopApp_Gateway'
   pod 'KeychainSwift'
 
   # DI
@@ -91,7 +91,7 @@ post_install do |installer|
           config.build_settings['SWIFT_VERSION'] = '4.0'
       end
       if ['shopify'].include? target.name
-          config.build_settings['FRAMEWORK_SEARCH_PATHS'] ||= ['$(inherited)', "${PODS_ROOT}/../.symlinks/flutter/ios", "${PODS_CONFIGURATION_BUILD_DIR}/Mobile-Buy-SDK", "${PODS_CONFIGURATION_BUILD_DIR}/Alamofire", "${PODS_CONFIGURATION_BUILD_DIR}/KeychainSwift", "${PODS_CONFIGURATION_BUILD_DIR}/ShopApp_Gateway"]
+          config.build_settings['FRAMEWORK_SEARCH_PATHS'] ||= ['$(inherited)', "${PODS_ROOT}/../.symlinks/flutter/ios", "${PODS_CONFIGURATION_BUILD_DIR}/Mobile-Buy-SDK", "${PODS_CONFIGURATION_BUILD_DIR}/Alamofire", "${PODS_CONFIGURATION_BUILD_DIR}/KeychainSwift"]
       end
     end
   end

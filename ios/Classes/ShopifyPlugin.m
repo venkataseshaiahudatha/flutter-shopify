@@ -9,7 +9,7 @@
 #import "ShopifyPlugin.h"
 #import "Plugin.h"
 #import "ClosePluginUseCase.h"
-#import "GetPlatformVersionUseCase.h"
+//#import "GetPlatformVersionUseCase.h"
 #import "shopify/shopify-Swift.h"
 
 @implementation ShopifyPlugin

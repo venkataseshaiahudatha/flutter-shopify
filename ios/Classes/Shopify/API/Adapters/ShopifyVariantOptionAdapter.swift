@@ -7,7 +7,7 @@
 //
 
 import MobileBuySDK
-import ShopApp_Gateway
+//import ShopApp_Gateway
 
 struct ShopifyVariantOptionAdapter {
     static func adapt(item: Storefront.SelectedOption?) -> VariantOption? {

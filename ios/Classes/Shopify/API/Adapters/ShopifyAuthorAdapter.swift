@@ -7,7 +7,7 @@
 //
 
 import MobileBuySDK
-import ShopApp_Gateway
+//import ShopApp_Gateway
 
 struct ShopifyAuthorAdapter {
     static func adapt(item: Storefront.ArticleAuthor?) -> Author? {

@@ -7,16 +7,16 @@
 //
 
 import MobileBuySDK
-import ShopApp_Gateway
+//import ShopApp_Gateway
 
 struct ShopifyCategoryAdapter {
-    static func adapt(item: Storefront.Collection?, currencyValue: String?) -> ShopApp_Gateway.Category? {
+    static func adapt(item: Storefront.Collection?, currencyValue: String?) -> Category? {
         let category = adapt(item: item, currencyValue: currencyValue, withProducts: true)
         category?.additionalDescription = item?.descriptionHtml
         return category
     }
 
-    static func adapt(item: Storefront.CollectionEdge?, currencyValue: String?) -> ShopApp_Gateway.Category? {
+    static func adapt(item: Storefront.CollectionEdge?, currencyValue: String?) -> Category? {
         let category = adapt(item: item?.node, currencyValue: currencyValue, withProducts: false)
         category?.paginationValue = item?.cursor
         return category
@@ -24,7 +24,7 @@ struct ShopifyCategoryAdapter {
 
     // MARK: - Private
 
-    private static func adapt(item: Storefront.Collection?, currencyValue: String?, withProducts: Bool) -> ShopApp_Gateway.Category? {
+    private static func adapt(item: Storefront.Collection?, currencyValue: String?, withProducts: Bool) -> Category? {
         guard let item = item else {
             return nil
         }

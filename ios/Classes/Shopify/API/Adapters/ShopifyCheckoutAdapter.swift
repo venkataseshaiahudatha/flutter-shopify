@@ -7,7 +7,7 @@
 //
 
 import MobileBuySDK
-import ShopApp_Gateway
+//import ShopApp_Gateway
 
 struct ShopifyCheckoutAdapter {
     static func adapt(item: Storefront.Checkout?) -> Checkout? {

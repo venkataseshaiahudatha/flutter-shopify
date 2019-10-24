@@ -7,7 +7,7 @@
 //
 
 import MobileBuySDK
-import ShopApp_Gateway
+//import ShopApp_Gateway
 
 struct ShopifyOrderAdapter {
     static func adapt(item: Storefront.Order?) -> Order? {

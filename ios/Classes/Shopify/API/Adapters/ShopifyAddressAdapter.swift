@@ -7,7 +7,7 @@
 //
 
 import MobileBuySDK
-import ShopApp_Gateway
+//import ShopApp_Gateway
 
 struct ShopifyAddressAdapter {
     static func adapt(item: Storefront.MailingAddress?) -> Address? {

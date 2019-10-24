@@ -7,7 +7,7 @@
 //
 
 import MobileBuySDK
-import ShopApp_Gateway
+//import ShopApp_Gateway
 
 struct ShopifyProductVariantAdapter {
     static func adapt(item: Storefront.ProductVariant?, productId: GraphQL.ID?, productImage: Storefront.Image?, isShortVariant: Bool = false) -> ProductVariant? {

@@ -7,7 +7,7 @@
 //
 
 import MobileBuySDK
-import ShopApp_Gateway
+//import ShopApp_Gateway
 
 struct ShopifyPolicyAdapter {
     static func adapt(item: Storefront.ShopPolicy?) -> Policy? {

@@ -7,7 +7,7 @@
 //
 
 import MobileBuySDK
-import ShopApp_Gateway
+//import ShopApp_Gateway
 
 struct ShopifyRepoErrorAdapter {
     static func adapt(item: Storefront.UserError?) -> RepoError? {

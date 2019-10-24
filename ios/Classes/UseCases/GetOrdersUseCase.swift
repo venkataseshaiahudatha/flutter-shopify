@@ -7,7 +7,7 @@
 
 import UIKit
 //import ShopApp_Shopify
-import ShopApp_Gateway
+//import ShopApp_Gateway
 import Flutter
 
 public class GetOrdersUseCase: UseCase {
@@ -29,7 +29,7 @@ public class GetOrdersUseCase: UseCase {
         if let shopifyAPI = mContext.api.instance as? ShopifyAPI {
             shopifyAPI.getOrderList(perPage: perPage, paginationValue: paginationValue) { [weak self] (orders, error) in
                 if let ordersObject: [Order] = orders {
-                    let ordersJsonString = ShopApp_Gateway.Category.toDictionaryArray(source: ordersObject)
+                    let ordersJsonString = Category.toDictionaryArray(source: ordersObject)
                     do {
                         let data = try JSONSerialization.data(withJSONObject: ordersJsonString,  options: .prettyPrinted)
                         let resStr = String.init(data: data, encoding: .utf8) ?? ""

@@ -1265,7 +1265,7 @@ public class ShopifyAPI: API, PaySessionDelegate {
         return { (query: Storefront.CollectionConnectionQuery) in
             query.edges({ $0
                 .cursor()
-                .node(self.collectionQuery(sortBy: nil, reverse: false))
+                .node(self.collectionQuery(sortBy: nil, reverse: false,productsNeeded: true))
             })
 
         }

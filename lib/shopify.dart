@@ -395,13 +395,17 @@ class Shopify {
   static Future<Customer> getCustomer() async {
     Customer response;
     await _channel.invokeMethod(kMethodGetCustomer).then((value) {
+      print(value);
       final responseMap = json.decode(value);
+      print(responseMap);
       //dirty fix to avoid null pointer.
       var address = responseMap['defaultAddress'];
       if (address == null) {
         responseMap['defaultAddress'] = new Map<String, dynamic>();
       }
+      print(address);
       response = Customer.fromJson(responseMap);
+      print(response);
     }).catchError((e) {
       throw PlatformException(code: e.code, message: e.message, details: e.details);
     });

@@ -233,6 +233,21 @@ extension VariantOption:JSONConvertible {
 
 extension Image:JSONConvertible {
     
+    static func toDictionaryArray(source objectArray:[Any]?) -> [[String : AnyObject]] {
+        
+        if let sourceArray = objectArray as? [Image] {
+            var retArray = [[String:AnyObject]]()
+            for anItem in sourceArray {
+                let newItem = anItem.toDictionary()
+                retArray.append(newItem)
+            }
+            return retArray
+        }
+        else {
+            return [["id":"" as AnyObject, "src":"" as AnyObject , "imageDescription":"" as AnyObject]]
+        }
+    }
+    
     convenience init(from imageJSON:String?) {
         self.init()
         guard imageJSON != nil else {
@@ -313,7 +328,7 @@ extension ProductVariant:JSONConvertible {
             return retArray
         }
         else {
-            return [["":"" as AnyObject]]
+            return [["price":0.0 as AnyObject,"selectedOptions":VariantOption.toDictionaryArray(source: [""]) as AnyObject]]
         }
     }
     
@@ -518,7 +533,7 @@ extension Order:JSONConvertible {
 extension Customer:JSONConvertible {
     
     func toDictionary() -> [String : AnyObject] {
-        return ["id":self.email as AnyObject, "email":self.email as AnyObject, "firstName":self.firstName as AnyObject? ?? "" as AnyObject, "lastName":self.lastName as AnyObject? ?? "" as AnyObject, "phone":self.phone as AnyObject, "promo":self.promo as AnyObject, "defaultAddress":self.defaultAddress?.toDictionary() as AnyObject, "addresses":Address.toDictionaryArray(source: self.addresses) as AnyObject]
+        return ["id":self.email as AnyObject, "email":self.email as AnyObject, "firstName":self.firstName as AnyObject? ?? "" as AnyObject, "lastName":self.lastName as AnyObject? ?? "" as AnyObject, "phone":self.phone as AnyObject, "promo":self.promo as AnyObject, "defaultAddress":self.defaultAddress?.toDictionary() as AnyObject, "addressList":Address.toDictionaryArray(source: self.addresses) as AnyObject]
     }
 }
 
@@ -608,8 +623,9 @@ extension ProductOption:JSONConvertible {
             return retArray
         }
         else {
-            
-            return [["":"" as AnyObject]]
+            return [["id":"" as AnyObject,
+            "name":"" as AnyObject,
+            "values": [""] as AnyObject]]
         }
     }
     convenience init(from productJSON:String?) {
@@ -776,7 +792,8 @@ extension Product:JSONConvertible {
             return retArray
         }
         else {
-            return [["":"" as AnyObject]]
+            return [["price": 0.0 as AnyObject,"tags":[""] as AnyObject,"images":Image.toDictionaryArray(source: [""]) as AnyObject,"variants": ProductVariant.toDictionaryArray(source: [""] ) as AnyObject,
+            "options":ProductOption.toDictionaryArray(source: [""] ) as AnyObject]]
         }
     }
     

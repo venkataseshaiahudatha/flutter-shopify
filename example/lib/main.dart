@@ -51,8 +51,8 @@ class _MyAppState extends State<MyApp> {
 
 //    await Shopify.isLoggedIn();
 
-//    signIn();
-    await getProductsList(); //variantList is coming  null in this call
+    signIn();
+ //   await getProductsList(); //variantList is coming  null in this call
 //    getProduct(); //variantList is present in individual product call
 //    getProductVariants();
 //    searchProductList();
@@ -199,6 +199,10 @@ class _MyAppState extends State<MyApp> {
   Future<void> getCategories() async {
     List<Category> categories = await Shopify.getCategoryList(15, null);
     print('Categories - $categories');
+//    categories.forEach((category) {
+//       Shopify.getCategoryDetails(
+//           category.id, 15, null, sort.SortType.NAME);
+//    });
   }
 
   Future<void> getCategoryDetails() async {
@@ -254,7 +258,9 @@ class _MyAppState extends State<MyApp> {
     bool val = await Shopify.signIn("testamigopal+a1@gmail.com", "123456");
 
     print('Result - $val');
-//    getCustomer();
+    getCustomer();
+    //getCategories();
+    getCategoryDetails();
 
   }
 

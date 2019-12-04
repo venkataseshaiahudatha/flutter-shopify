@@ -328,7 +328,7 @@ extension ProductVariant:JSONConvertible {
             return retArray
         }
         else {
-            return [["price":0.0 as AnyObject,"selectedOptions":VariantOption.toDictionaryArray(source: [""]) as AnyObject]]
+            return [["price":0.0 as AnyObject,"selectedOptions":VariantOption.toDictionaryArray(source: [""]) as AnyObject,"available":false as AnyObject]]
         }
     }
     

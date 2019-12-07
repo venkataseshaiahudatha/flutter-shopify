@@ -17,7 +17,7 @@ struct ShopifyCategoryAdapter {
     }
 
     static func adapt(item: Storefront.CollectionEdge?, currencyValue: String?) -> Category? {
-        let category = adapt(item: item?.node, currencyValue: currencyValue, withProducts: false)
+        let category = adapt(item: item?.node, currencyValue: currencyValue, withProducts: true)
         category?.paginationValue = item?.cursor
         return category
     }

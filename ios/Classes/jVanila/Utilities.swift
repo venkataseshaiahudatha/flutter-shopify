@@ -328,12 +328,12 @@ extension ProductVariant:JSONConvertible {
             return retArray
         }
         else {
-            return [["price":0.0 as AnyObject,"selectedOptions":VariantOption.toDictionaryArray(source: [""]) as AnyObject,"available":false as AnyObject]]
+            return [["price":0.0 as AnyObject,"selectedOptions":VariantOption.toDictionaryArray(source: [""]) as AnyObject,"isAvailable":false as AnyObject]]
         }
     }
     
     func toDictionary() -> [String : AnyObject] {
-        return ["id":self.id as AnyObject, "title":self.title as AnyObject? ?? "" as AnyObject, "price":self.price as AnyObject? ?? "" as AnyObject, "available":self.available as AnyObject, "productId":self.productId as AnyObject, "image":self.image?.toDictionary() as AnyObject, "selectedOptions":VariantOption.toDictionaryArray(source: self.selectedOptions!) as AnyObject]
+        return ["id":self.id as AnyObject, "title":self.title as AnyObject? ?? "" as AnyObject, "price":self.price as AnyObject? ?? "" as AnyObject, "isAvailable":self.available as AnyObject, "productId":self.productId as AnyObject, "image":self.image?.toDictionary() as AnyObject, "selectedOptions":VariantOption.toDictionaryArray(source: self.selectedOptions!) as AnyObject]
     }
 }
 

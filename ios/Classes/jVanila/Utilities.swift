@@ -288,7 +288,7 @@ extension ProductVariant:JSONConvertible {
                 if let priceString  = productVariantJSONDict["price"] as? String {
                     self.price = Decimal(string: priceString)
                 }
-                self.available = productVariantJSONDict["available"] as? Bool ?? false
+                self.available = productVariantJSONDict["isAvailable"] as? Bool ?? false
                 self.productId = productVariantJSONDict["productId"] as? String ?? ""
                 if let _image = productVariantJSONDict["image"] as? String {
                     

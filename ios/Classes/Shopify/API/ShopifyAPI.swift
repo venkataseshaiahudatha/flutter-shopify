@@ -1167,7 +1167,7 @@ public class ShopifyAPI: API, PaySessionDelegate {
         return { (query: Storefront.ProductConnectionQuery) in
             query.edges({ $0
                 .cursor()
-                .node(self.productQuery(variantsPriceNeeded: true))
+                .node(self.productQuery(variantsPriceNeeded: false))
             })
         }
     }

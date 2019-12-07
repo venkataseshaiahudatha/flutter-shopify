@@ -15,7 +15,7 @@ struct ShopifyProductAdapter {
     }
 
     static func adapt(item: Storefront.ProductEdge?, currencyValue: String?) -> Product? {
-        let product = adapt(item: item?.node, currencyValue: currencyValue, isShortVariant: true)
+        let product = adapt(item: item?.node, currencyValue: currencyValue, isShortVariant: false)
         product?.paginationValue = item?.cursor
         return product
     }

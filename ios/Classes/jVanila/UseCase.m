@@ -32,10 +32,10 @@
     //override
 }
 
-- (void)createErrorWithCase:(NSString *)errorCase message:(NSString*)errorMessage error:(id) errorObj on:(FlutterResult)result  {
+- (void)createErrorWithCase:(NSString *)errorCase message:(NSString*)errorMessage error:(NSError*) errorObj on:(FlutterResult)result  {
     
-    NSString *errorString = [NSString stringWithFormat:@"%@ %@ %@", errorCase, errorMessage, errorObj];
-    result(errorString);
+    FlutterError *fError = [FlutterError errorWithCode:errorCase message:errorMessage details:errorObj.localizedDescription];
+    result(fError);
 }
 
 @end
